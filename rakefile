@@ -1,0 +1,42 @@
+require 'rake/clean'
+
+PROG = "graph"
+LIBNAME = PROG
+#LIBFILE = "lib#{LIBNAME}.a"
+
+SRC = FileList['src/**/*.cpp',
+               'test/**/*.cpp']
+
+OBJDIR = 'obj'
+OBJ = SRC.collect { |fn| File.join(OBJDIR, File.basename(fn).ext('o')) }
+
+CLEAN.include(OBJ, OBJDIR)
+CLOBBER.include(PROG)
+
+task :default => [:build, :run, :test]
+
+task :build => [PROG]
+
+task :test => [PROG] do
+  sh "valgrind ./#{PROG}"
+end
+
+task :run => [PROG] do
+  sh "./#{PROG}"
+end
+
+file PROG => OBJ do
+  sh "g++ -std=c++11 -o #{PROG} #{OBJ}"
+end
+
+directory OBJDIR
+
+rule '.o' => lambda{ |objfile| find_source(objfile) } do |t|
+  Task[OBJDIR].invoke
+  sh "g++ -std=c++11 -c -o #{t.name} #{t.source}"
+end
+
+def find_source(objfile)
+  base = File.basename(objfile, '.o')
+  SRC.find { |s| File.basename(s, '.cpp') == base }
+end

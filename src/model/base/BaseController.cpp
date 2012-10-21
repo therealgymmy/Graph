@@ -1,4 +1,4 @@
-#include "../_include/Handler.h"
+#include "../_include/BaseController.h"
 
 // Dependencies
 #include "../../common/_include/Exception.h"
@@ -6,9 +6,9 @@
 #include "../_include/Resource.h"
 #include "../_include/Vertex.h"
 
-Handler Handler::instance_;
+BaseController BaseController::instance_;
 
-Vertex* Handler::newVertex (const Identity id)
+Vertex* BaseController::newVertex (const Identity id)
 // Create a new vertex with this id.
 // Attempt to register it on Stack.
 // If fail, return NULL.
@@ -24,7 +24,7 @@ Vertex* Handler::newVertex (const Identity id)
     return v;
 }
 
-Edge* Handler::join (const Identity id, const Identity v1_id, const Identity v2_id)
+Edge* BaseController::join (const Identity id, const Identity v1_id, const Identity v2_id)
 // Attempt to ref v1 and v2 from Stack.
 // Create a new edge with this id, connect it to v1 and v2.
 // Then try to register it on Stack.
@@ -61,7 +61,7 @@ Edge* Handler::join (const Identity id, const Identity v1_id, const Identity v2_
     return e;
 }
 
-bool Handler::disjoin (const Identity v1_id, const Identity v2_id)
+bool BaseController::disjoin (const Identity v1_id, const Identity v2_id)
 // Attempt to disjoin v1 and v2.
 // If v1 == v2, v1 or v2 does not exist, or not connected,
 //  return false.
@@ -90,7 +90,7 @@ bool Handler::disjoin (const Identity v1_id, const Identity v2_id)
 
 // Pre: v1 and v2 must point at valid addresses.
 //      v1 and v2 must be connected.
-Edge* Handler::commonEdge (const Vertex *v1, const Vertex *v2) const
+Edge* BaseController::commonEdge (const Vertex *v1, const Vertex *v2) const
 // Return common edge
 {
     Edge *e1 = v1->commonEdge(v2->identity());

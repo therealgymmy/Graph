@@ -1,17 +1,12 @@
-#ifndef HANDLER_H
-#define HANDLER_H
+#ifndef BASE_CONTROLLER_H
+#define BASE_CONTROLLER_H
 
 // Dependencies
 #include "ModelTypes.h"
 
-enum class Object {
-    EDGE,
-    VERTEX,
-};
-
-class Handler {
+class BaseController {
 public:
-    static Handler& Instance() { return instance_; }
+    static BaseController& Instance() { return instance_; }
 
 //--Mutator to Stack
     // Pre: If id is not unique, will return NULL.
@@ -24,12 +19,12 @@ public:
     bool disjoin (const Identity v1_id, const Identity v2_id);
 
 private:
-    static Handler instance_;
+    static BaseController instance_;
 
 //--Accessor
     Edge* commonEdge (const Vertex *v1, const Vertex *v2) const;
 };
 
-#define Handle Handler::Instance()
+#define BaseControl BaseController::Instance()
 
-#endif//HANDLER_H
+#endif//BASE_CONTROLLER_H
