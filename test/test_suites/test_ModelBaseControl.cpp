@@ -21,28 +21,34 @@ TestStatus ModelBaseControl::run ()
     Edge *e = BaseControl.join(4, 1, 2);
     if (e == NULL) {
         __log_print << "no edge";
+        __return(TestStatus::FAIL);
     }
 
     Edge *e1 = BaseControl.join(5, 1, 3);
     if (e1 == NULL) {
         __log_print << "no edge";
+        __return(TestStatus::FAIL);
     }
 
     Edge *e2 = BaseControl.join(6, 2, 3);
     if (e2 == NULL) {
         __log_print << "no edge";
+        __return(TestStatus::FAIL);
     }
 
     __checkpoint("Remove Vertices");
     if (!BaseControl.removeVertex(1)) {
         __log_print << "remove fail";
+        __return(TestStatus::FAIL);
     }
     if (!BaseControl.removeVertex(2)) {
         __log_print << "remove fail";
+        __return(TestStatus::FAIL);
     }
     if (!BaseControl.removeVertex(3)) {
         __log_print << "remove fail";
+        __return(TestStatus::FAIL);
     }
 
-    __return(TestStatus::SUCCESS);
+    __return(TestStatus::PASS);
 }

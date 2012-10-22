@@ -2,7 +2,8 @@
 #define TEST_BASE_H
 
 enum class TestStatus {
-    SUCCESS,
+    PASS,
+    FAIL,
 };
 
 class Test {
