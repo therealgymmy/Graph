@@ -22,11 +22,9 @@ Compile and Test
                       ---> base/
          ---> main.cpp
 
-`src` is the place for all program source code.
-
-`common` is for facilities such as exception handling.
-
-`model` is the part that handles internal logic of the program.
+* `src` is the place for all program source code.
+* `common` is for facilities such as exception handling.
+* `model` is the part that handles internal logic of the program.
 
 All header files go into the corresponding `_include` directory.
 
@@ -41,9 +39,9 @@ Also in the plan is a gui front-end, though I'm still considering which framewor
           ---> test_suites/
           ---> test_main.cpp
 
-`test` is the place for all testing related code.
-`_include` is for all the header files.
-`test_interface` is the part handling core logic of the test framework.
-`test_suites` stores individual tests.
+* `test` is the place for all testing related code.
+* `_include` is for all the header files.
+* `test_interface` is the part handling core logic of the test framework.
+* `test_suites` stores individual tests.
 
 To add a new test, create files corresponding to the sample test and modify accordingly.
