@@ -1,6 +1,17 @@
 Graph
 =====
 
+Introduction
+------------
+**Graph** is a program which builds a simple graph as defined in graph theory of MATH239
+at University of Waterloo.
+This means you can build a graph and query the program on the graph's connectivity,
+if it's isomorphic to another graph, or find a spanning tree, etc.
+
+**Graph** is still a work in progress.
+A command line interpreter should come first.
+Also in the plan is a gui front-end, though I'm still considering which framework to use.
+
 Pre-requisite
 --------------
 
@@ -25,15 +36,11 @@ Compile and Test
 * `src` is the place for all program source code.
 * `common` is for facilities such as exception handling.
 * `model` is the part that handles internal logic of the program.
+* `_include` within each directory stores all corresponding header files.
 
-All header files go into the corresponding `_include` directory.
+In the near future, `controller` and `view` will be added to handle external requests.
 
-**Graph** is still a work in progress.
-Later on, `controller` and `view` should be added to handle external requests.
-A command line interpreter should come first.
-Also in the plan is a gui front-end, though I'm still considering which framework to use.
-
-#### Tests Organization
+#### Test Organization
     test/ ---> _include/
           ---> test_core/
           ---> test_suites/
