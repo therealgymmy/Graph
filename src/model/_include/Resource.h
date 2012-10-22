@@ -4,6 +4,7 @@
 // Dependencies
 #include <cstdint>
 #include <map>
+#include <set>
 #include <utility>
 #include "ModelTypes.h"
 
@@ -18,6 +19,7 @@ public:
     Edge*   getEdge   (const Identity id);    // may throw
     Vertex* getVertex (const Identity id);    // may throw
 
+    // Pre: every new object should have an unique id.
     void reg   (Edge   *e);   // may throw
     void reg   (Vertex *v);   // may throw
     void ref   (const Edge   *e);
@@ -28,6 +30,7 @@ private:
     static Storage instance_;
     std::map<Identity, EdgePair>   eRef_;
     std::map<Identity, VertexPair> vRef_;
+    std::set<Identity> id_;
 
     void unreg   (const Edge   *e);
     void unreg   (const Vertex *v);

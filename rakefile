@@ -1,39 +1,53 @@
 require 'rake/clean'
 
-PROG = "graph"
-LIBNAME = PROG
-#LIBFILE = "lib#{LIBNAME}.a"
+CC = "g++"
+@CFLAGS = " -std=c++11"
 
+PROG = "graph"
 SRC = FileList['src/**/*.cpp',
                'test/**/*.cpp']
-
 OBJDIR = 'obj'
 OBJ = SRC.collect { |fn| File.join(OBJDIR, File.basename(fn).ext('o')) }
 
 CLEAN.include(OBJ, OBJDIR)
 CLOBBER.include(PROG)
 
-task :default => [:build, :run, :test]
+task :default => [:help]
 
-task :build => [PROG]
-
-task :test => [PROG] do
-  sh "valgrind ./#{PROG}"
+task :help do
+  puts "build -> building project"
+  puts "debug -> build a debug version of project"
+  puts "run   -> run executable normally"
+  puts "test  -> run executable with valgrind --leak-full=check"
 end
 
-task :run => [PROG] do
+task :build do
+  @CFLAGS += " -D_RELEASE"
+  Rake::Task[PROG].invoke
+end
+
+task :debug do
+  @CFLAGS += " -D_DEBUG"
+  Rake::Task[PROG].invoke
+end
+
+task :run => "build" do
   sh "./#{PROG}"
 end
 
+task :test => "debug" do
+  sh "valgrind --leak-check=full ./#{PROG}"
+end
+
 file PROG => OBJ do
-  sh "g++ -std=c++11 -o #{PROG} #{OBJ}"
+  sh "#{CC} #{@CFLAGS} -o #{PROG} #{OBJ}"
 end
 
 directory OBJDIR
 
 rule '.o' => lambda{ |objfile| find_source(objfile) } do |t|
   Task[OBJDIR].invoke
-  sh "g++ -std=c++11 -c -o #{t.name} #{t.source}"
+  sh "#{CC} #{@CFLAGS} -c -o #{t.name} #{t.source}"
 end
 
 def find_source(objfile)

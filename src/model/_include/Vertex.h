@@ -10,10 +10,13 @@
 #include <map>
 #include <set>
 #include <string>
+#include <vector>
 #include "ModelTypes.h"
 
 class Vertex {
 public:
+    typedef std::vector<Identity> NeighbourList;
+
 //--Constructor
     Vertex (const Identity id);
 
@@ -23,6 +26,8 @@ public:
     bool hasEdge   (const Identity id) const;
     // Pre: If id is not in neighbours_, return NULL;
     Edge* commonEdge (const Identity id) const;
+
+    NeighbourList getNeighbours () const;
 
 //--Mutator
     bool removeVertex (const Identity id);

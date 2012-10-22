@@ -1,6 +1,7 @@
 #include "../_include/Vertex.h"
 
 // Dependencies
+#include <algorithm>
 #include "../../common/_include/Exception.h"
 #include "../_include/Edge.h"
 
@@ -44,6 +45,16 @@ Edge* Vertex::commonEdge (const Identity id) const
     else {
         return e_.find(it->second)->second;
     }
+}
+
+Vertex::NeighbourList Vertex::getNeighbours () const
+{
+    NeighbourList list;
+    std::for_each(neighbours_.begin(), neighbours_.end(),
+            [&](std::pair<Identity, Identity> it) {
+                list.push_back(it.first);
+            });
+    return list;
 }
 
 bool Vertex::addEdge (Edge *e)

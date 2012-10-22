@@ -1,6 +1,7 @@
 #include "../_include/BaseController.h"
 
 // Dependencies
+#include <algorithm>
 #include "../../common/_include/Exception.h"
 #include "../_include/Edge.h"
 #include "../_include/Resource.h"
@@ -22,6 +23,22 @@ Vertex* BaseController::newVertex (const Identity id)
         return NULL;
     }
     return v;
+}
+
+bool BaseController::removeVertex (const Identity id)
+// Remvoe vertex with this id.
+// If not exist, return null.
+// If vertex is joint with other vertices,
+//  remove common edges, and unref its neighbours.
+{
+    Vertex *v = Stack.getVertex(id);
+    Vertex::NeighbourList list = v->getNeighbours();
+    std::for_each(list.begin(), list.end(),
+            [&](const Identity otherId) {
+                disjoin(id, otherId);
+            });
+    Stack.unref(v);
+    return true;
 }
 
 Edge* BaseController::join (const Identity id, const Identity v1_id, const Identity v2_id)

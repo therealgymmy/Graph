@@ -33,12 +33,15 @@ void Storage::reg (Edge *e)
 {
     Identity id = e->identity();
     if (eRef_.find(id) != eRef_.end()) {
-        // Edge already exists.
+        throw RuntimeExcept();
+    }
+    if (id_.find(id) != id_.end()) {
         throw RuntimeExcept();
     }
 
     // Register id.
     eRef_[id] = std::make_pair(e, REG_DEFAULT_VAL);
+    id_.insert(id);
 }
 
 void Storage::reg (Vertex *v)
@@ -47,12 +50,15 @@ void Storage::reg (Vertex *v)
 {
     Identity id = v->identity();
     if (vRef_.find(id) != vRef_.end()) {
-        // Vertex already exists.
+        throw RuntimeExcept();
+    }
+    if (id_.find(id) != id_.end()) {
         throw RuntimeExcept();
     }
 
     // Register id.
     vRef_[id] = std::make_pair(v, REG_DEFAULT_VAL);
+    id_.insert(id);
 }
 
 void Storage::ref (const Edge *e)
@@ -76,7 +82,6 @@ void Storage::unref (const Edge *e)
 {
     Identity id = e->identity();
     if (--eRef_[id].second == 0) {
-        // Unregister the edge.
         unreg(e);
     }
 }
@@ -87,7 +92,6 @@ void Storage::unref (const Vertex *v)
 {
     Identity id = v->identity();
     if (--vRef_[id].second == 0) {
-        // Unregister the vertex.
         unreg(v);
     }
 }
@@ -95,27 +99,23 @@ void Storage::unref (const Vertex *v)
 void Storage::unreg (const Edge *e)
 // Unregister this edge -> delete it.
 {
-    // Retrieve the edge.
     Identity id = e->identity();
     Edge *e_del = eRef_.find(id)->second.first;
 
-    // Unregister from eRef_.
     eRef_.erase(id);
+    id_.erase(id);
 
-    // Delete the edge.
     delete e_del;
 }
 
 void Storage::unreg (const Vertex *v)
 // Unregister this vertex -> delete it.
 {
-    // Retrieve the vertex.
     Identity id = v->identity();
     Vertex *v_del = vRef_.find(id)->second.first;
 
-    // Unregister from vRef_.
     vRef_.erase(id);
+    id_.erase(id);
 
-    // Delete the edge.
     delete v_del;
 }
