@@ -9,14 +9,13 @@ To compile Graph, you'll need rake and a compiler conforming to the C++11 standa
 Compile and Test
 -----------------------
 
+#### Rake Commands
 * `rake` or `rake help` outputs help message.
 * `rake build` builds the project normally.
 * `rake debug` links the test framework to the project for testing.
 * `rake run` runs the executable.
 * `rake test` runs the executable within valgrind (with --leak-check=full).
 
-Source Organization
--------------------
+#### Source Organization
 
-Tests Organization
-------------------
+#### Tests Organization
