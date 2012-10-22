@@ -3,7 +3,11 @@
 
 #include <sstream>
 
-#define FUNC __PRETTY_FUNCTION__
+#if defined(__GCC__) || (__GNUC__) || (__MINGW32__)
+ #define FUNC __PRETTY_FUNCTION__
+#else
+ #define FUNC __func__
+#endif
 
 #define __log_print TestLog().get()
 #define __enter TestLog().get() << "<--Enter-->    " << FUNC

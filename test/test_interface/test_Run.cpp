@@ -6,10 +6,12 @@
 #include "../_include/test_List.h"
 
 // Tests
+#include "../_include/test_SampleSuite.h"
 #include "../_include/test_ModelBaseControl.h"
 
 void initTest ()
 {
+    TestList.tests_[TestType::SAMPLE_SUITE] = new SampleSuite();
     TestList.tests_[TestType::MODEL_BASE_CONTROL] = new ModelBaseControl();
 }
 

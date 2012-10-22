@@ -6,6 +6,7 @@
 #include <utility>
 
 enum class TestType {
+    SAMPLE_SUITE,
     MODEL_BASE_CONTROL,
 };
 

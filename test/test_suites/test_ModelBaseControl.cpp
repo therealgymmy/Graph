@@ -1,7 +1,6 @@
 #include "../_include/test_ModelBaseControl.h"
 
 // Dependencies
-#include <iostream>
 #include "../_include/test_Log.h"
 
 // Required By Test

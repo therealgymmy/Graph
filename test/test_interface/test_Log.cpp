@@ -9,7 +9,7 @@ TestLog::~TestLog ()
     std::fprintf(stderr, "%s", os_.str().c_str());
     std::fflush(stderr);
 
-    std::ofstream logfile("log.txt",
+    std::ofstream logfile("test_results.log",
                           std::ios::out | std::ios::app | std::ios::binary);
     if (logfile.is_open()) {
         logfile << os_.str();
