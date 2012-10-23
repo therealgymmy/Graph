@@ -3,7 +3,7 @@ Graph
 
 Introduction
 ------------
-**Graph** is a program which builds a simple graph as defined in graph theory of MATH239
+**Graph** is a program which builds simple graphs as defined in graph theory of MATH239
 at University of Waterloo.
 This means you can build a graph and query the program on the graph's connectivity,
 if it's isomorphic to another graph, or find a spanning tree, etc.
@@ -31,6 +31,7 @@ Compile and Test
     src/ ---> common/ ---> _include/
          ---> model/  ---> _include/
                       ---> base/
+                      ---> core/
          ---> main.cpp
 
 * `src` is the place for all program source code.

@@ -1,12 +1,25 @@
 #ifndef BASE_CONTROLLER_H
 #define BASE_CONTROLLER_H
 
+// Low level controller for creating, maintaining, destroying vertices.
+// The maintenance of edges are for the most part encapsulated.
+// You can get access to raw pointers to vertices or edges,
+//  but it's not recommended.
+
 // Dependencies
 #include "ModelTypes.h"
+#include "Vertex.h"
 
 class BaseController {
 public:
     static BaseController& Instance() { return instance_; }
+
+//--Accessor to Stack
+    // Pre: id must be valid.
+    Vertex::NeighbourList getNeighbours (const Identity id);
+
+    // Pre: id must be valid.
+    bool isJoint (const Identity v1_id, const Identity v2_id);
 
 //--Mutator to Stack
     // Pre: If id is not unique, will return NULL.

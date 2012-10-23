@@ -5,9 +5,22 @@
 #include "../../common/_include/Exception.h"
 #include "../_include/Edge.h"
 #include "../_include/Resource.h"
-#include "../_include/Vertex.h"
 
 BaseController BaseController::instance_;
+
+Vertex::NeighbourList BaseController::getNeighbours (const Identity id)
+// If id is not valid, Stack.getVertex will throw.
+{
+    return Stack.getVertex(id)->getNeighbours();
+}
+
+bool BaseController::isJoint (const Identity v1_id, const Identity v2_id)
+// If id is not valid, Stack.getVertex will throw.
+{
+    Vertex *v1 = Stack.getVertex(v1_id);
+    Vertex *v2 = Stack.getVertex(v2_id);
+    return (v1->hasVertex(v2_id) & v2->hasVertex(v1_id));
+}
 
 Vertex* BaseController::newVertex (const Identity id)
 // Create a new vertex with this id.
@@ -30,13 +43,14 @@ bool BaseController::removeVertex (const Identity id)
 // If not exist, return null.
 // If vertex is joint with other vertices,
 //  remove common edges, and unref its neighbours.
+// If id is not valid, Stack.getVertex will throw.
 {
     Vertex *v = Stack.getVertex(id);
     Vertex::NeighbourList list = v->getNeighbours();
     std::for_each(list.begin(), list.end(),
-            [&](const Identity otherId) {
-                disjoin(id, otherId);
-            });
+                  [&] (const Identity otherId) {
+                      disjoin(id, otherId);
+                  });
     Stack.unref(v);
     return true;
 }
@@ -46,6 +60,7 @@ Edge* BaseController::join (const Identity id, const Identity v1_id, const Ident
 // Create a new edge with this id, connect it to v1 and v2.
 // Then try to register it on Stack.
 // If fail, return NULL.
+// If id is not valid, Stack.getVertex will throw.
 {
     if (v1_id == v2_id) {
         return NULL;

@@ -5,6 +5,7 @@
 #include <cstdint>
 
 //--- Forward Declaration ---//
+class BaseController;
 class Edge;
 class Vertex;
 //******************************************************************//

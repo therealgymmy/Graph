@@ -51,9 +51,9 @@ Vertex::NeighbourList Vertex::getNeighbours () const
 {
     NeighbourList list;
     std::for_each(neighbours_.begin(), neighbours_.end(),
-            [&](std::pair<Identity, Identity> it) {
-                list.push_back(it.first);
-            });
+                  [&] (std::pair<Identity, Identity> it) {
+                      list.push_back(it.first);
+                  });
     return list;
 }
 
