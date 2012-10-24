@@ -2,7 +2,6 @@
 
 // Dependencies
 #include <algorithm>
-#include "../_include/BaseController.h"
 
 Graph::Graph (const Identity id)
 : BaseObject (id)
@@ -11,12 +10,8 @@ Graph::Graph (const Identity id)
 }
 
 Graph::~Graph ()
-// Remove all vertices.
+// Do nothing.
 {
-    std::for_each(vertices_.begin(), vertices_.end(),
-                  [] (Identity v_id) {
-                      BaseControl.removeVertex(v_id);
-                  });
 }
 
 Graph::VertexList Graph::getVertices () const

@@ -70,6 +70,10 @@ bool LogicController::remGraph (const Identity g_id)
                   [&] (const Identity id) {
                       register_.erase(id);
                   });
+    std::for_each(list.begin(), list.end(),
+                  [&] (const Identity id) {
+                      base_.removeVertex(id);
+                  });
     graphs_.erase(g_id);
     delete g;
 
@@ -91,6 +95,7 @@ bool LogicController::remVertex (const Identity v_id)
     }
 
     register_.erase(v_id);
+    base_.removeVertex(v_id);
     return true;
 }
 
