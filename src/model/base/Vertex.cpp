@@ -5,7 +5,7 @@
 #include "../../common/_include/Exception.h"
 #include "../_include/Edge.h"
 
-Vertex::Vertex (Identity id)
+Vertex::Vertex (Identity id) noexcept
 : id_(id)
 // Do nothing.
 {

@@ -5,7 +5,7 @@
 
 class ModelBaseControl: public Test {
 public:
-    virtual TestStatus run ();
+    TestStatus run ();
 
 private:
     TestStatus BaseTest ();

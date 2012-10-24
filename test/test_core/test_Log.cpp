@@ -22,3 +22,15 @@ std::ostringstream& TestLog::get ()
     os_ << "--TEST--    ";
     return os_;
 }
+
+void outputTestStatus (TestStatus status, const char *testName)
+{
+    switch (status) {
+        case TestStatus::PASS:
+            __log_print << "<--Test: \'" << testName << "\'-->    Passed";
+            break;
+        case TestStatus::FAIL:
+            __log_print << "<--Test: \'" << testName << "\'-->    Failed";
+            break;
+    }
+}

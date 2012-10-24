@@ -1,7 +1,7 @@
 require 'rake/clean'
 
 CC = "g++"
-@CFLAGS = " -std=c++11"
+@CFLAGS = " -std=c++11 -Wall -Wextra"
 
 PROG = "graph"
 SRC = FileList['src/**/*.cpp',
