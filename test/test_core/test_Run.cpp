@@ -8,11 +8,13 @@
 // Tests
 #include "../_include/test_SampleSuite.h"
 #include "../_include/test_ModelBaseControl.h"
+#include "../_include/test_ModelLogicControl.h"
 
 void initTest ()
 {
     TestList.tests_[TestType::SAMPLE_SUITE] = new SampleSuite();
     TestList.tests_[TestType::MODEL_BASE_CONTROL] = new ModelBaseControl();
+    TestList.tests_[TestType::MODEL_LOGIC_CONTROL] = new ModelLogicControl();
 }
 
 void runTest ()

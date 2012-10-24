@@ -7,6 +7,7 @@
 //--- Forward Declaration ---//
 class BaseController;
 class Edge;
+class Graph;
 class Vertex;
 //******************************************************************//
 

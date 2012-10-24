@@ -4,7 +4,7 @@
 #include "../../common/_include/Exception.h"
 #include "../_include/Vertex.h"
 
-Edge::Edge (const Identity id, Vertex *v1, Vertex *v2)
+Edge::Edge (const Identity id, Vertex *v1, Vertex *v2) noexcept
 : id_(id), pair_(v1, v2)
 // Do nothing.
 {

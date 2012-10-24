@@ -13,7 +13,7 @@
 class Edge {
 public:
 //--Constructor
-    Edge (const Identity id, Vertex *v1, Vertex *v2);
+    Edge (const Identity id, Vertex *v1, Vertex *v2) noexcept;
 
 //--Accessor
     Identity identity () const;

@@ -18,7 +18,7 @@ public:
     typedef std::vector<Identity> NeighbourList;
 
 //--Constructor
-    Vertex (const Identity id);
+    Vertex (const Identity id) noexcept;
 
 //--Accessor
     Identity identity () const;
