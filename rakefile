@@ -35,10 +35,11 @@ task :info do
   puts "LOC:     #{count_loc}"
   puts "Github:  #{GITHUB}"
   puts "Summary:"
-  puts "         Graph is a program which builds simple graphs as defined in graph theory"
-  puts "         of MATH239 at University of Waterloo. This means you can build a graph"
-  puts "         and query the program on the graph's connectivity, if it's isomorphic to"
-  puts "         another graph, or find a spanning tree, etc."
+  puts "         Graph is a program which builds simple graphs as defined in"
+  puts "         graph theory of MATH239 at University of Waterloo. This means"
+  puts "         you can build a graph and query the program on the graph's"
+  puts "         connectivity, if it's isomorphic to another graph, or find a"
+  puts "         spanning tree, etc."
   puts
 end
 
