@@ -23,8 +23,20 @@ public:
 //--Destructor
     ~LogicController ();
 
-//--Accessor
+//--Static Accessor
     static LogicController& Instance () { return instance_; }
+
+//--Accessor
+    bool hasGraph  (const Identity g_id) const;
+    bool hasVertex (const Identity v_id) const;
+    bool isJointBetween (const Identity v1_id, const Identity v2_id) const;
+
+    Identity          graphOf      (const Identity v_id) const;
+    Graph::VertexList verticesOf   (const Identity g_id) const;
+    Graph::VertexList neighboursOf (const Identity v_id) const;
+
+    Graph::GraphList  allGraphs   () const;
+    Graph::VertexList allVertices () const;
 
 //--Mutator
     Identity newGraph ();   // may throw

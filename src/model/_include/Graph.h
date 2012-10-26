@@ -15,6 +15,7 @@
 
 class Graph : public BaseObject {
 public:
+    typedef std::set<Identity> GraphList;
     typedef std::set<Identity> VertexList;
 
 //--Destructor
