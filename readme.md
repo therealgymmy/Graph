@@ -22,6 +22,7 @@ Compile and Test
 
 #### Rake Commands
 * `rake` or `rake help` outputs help message.
+* `rake info` outputs project related information.
 * `rake build` builds the project normally.
 * `rake debug` links the test framework to the project for testing.
 * `rake run` runs the executable.

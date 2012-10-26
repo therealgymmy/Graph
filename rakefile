@@ -1,5 +1,9 @@
 require 'rake/clean'
 
+PROJECT_NAME = "Graph"
+AUTHOR       = "Jimmy Lu"
+GITHUB       = "https://github.com/BeyondSora/Graph"
+
 CC = "g++"
 @CFLAGS = " -std=c++11 -Wall -Wextra"
 
@@ -15,10 +19,27 @@ CLOBBER.include(PROG)
 task :default => [:help]
 
 task :help do
-  puts "build -> building project"
+  puts
+  puts "info  -> display project related information"
+  puts "build -> build project for release"
   puts "debug -> build a debug version of project"
   puts "run   -> run executable normally"
   puts "test  -> run executable with valgrind --leak-full=check"
+  puts
+end
+
+task :info do
+  puts
+  puts "Project: #{PROJECT_NAME}"
+  puts "Author:  #{AUTHOR}"
+  puts "LOC:     #{count_loc}"
+  puts "Github:  #{GITHUB}"
+  puts "Summary:"
+  puts "         Graph is a program which builds simple graphs as defined in graph theory"
+  puts "         of MATH239 at University of Waterloo. This means you can build a graph"
+  puts "         and query the program on the graph's connectivity, if it's isomorphic to"
+  puts "         another graph, or find a spanning tree, etc."
+  puts
 end
 
 task :build do
@@ -53,4 +74,12 @@ end
 def find_source(objfile)
   base = File.basename(objfile, '.o')
   SRC.find { |s| File.basename(s, '.cpp') == base }
+end
+
+def count_loc
+  loc = 0
+  SRC.each { |f|
+    loc += File.foreach(f).inject(0) { |c, line| c + 1 }
+  }
+  return loc
 end
