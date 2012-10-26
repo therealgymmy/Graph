@@ -8,7 +8,12 @@ public:
     TestStatus run ();
 
 private:
-    TestStatus LogicTest ();
+    TestStatus GraphCreation ();
+    TestStatus VertexCreation ();
+    TestStatus VertexConnection ();
+    TestStatus VertexDisconnection ();
+    TestStatus VertexRemoval ();
+    TestStatus GraphRemoval ();
 };
 
 #endif//TEST_MODEL_LOGIC_CONTROL_H

@@ -70,6 +70,11 @@ Edge* BaseController::join (const Identity id, const Identity v1_id, const Ident
     Vertex *v1 = Stack.getVertex(v1_id);
     Vertex *v2 = Stack.getVertex(v2_id);
 
+    // If v1 & v2 are already joint, return NULL.
+    if (v1->hasVertex(v2_id) || v2->hasVertex(v1_id)) {
+        return NULL;
+    }
+
     Edge *e = new Edge(id, v1, v2);
     try {
         Stack.reg(e);
@@ -105,7 +110,11 @@ bool BaseController::disjoin (const Identity v1_id, const Identity v2_id)
     // May throw if id's are not valid.
     Vertex *v1 = Stack.getVertex(v1_id);
     Vertex *v2 = Stack.getVertex(v2_id);
+
     Edge *e = commonEdge(v1, v2);
+    if (e == NULL) {
+        return false;
+    }
 
     if (!v1->removeVertex(v2_id)) {
         return false;
@@ -127,7 +136,7 @@ Edge* BaseController::commonEdge (const Vertex *v1, const Vertex *v2) const
 {
     Edge *e1 = v1->commonEdge(v2->identity());
     Edge *e2 = v2->commonEdge(v1->identity());
-    if (e1 != e2) {
+    if (e1 != e2) {     // If e1 == e2 == NULL, then it's fine.
         throw RuntimeExcept();
     }
 

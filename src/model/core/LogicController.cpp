@@ -99,6 +99,48 @@ bool LogicController::remVertex (const Identity v_id)
     return true;
 }
 
+bool LogicController::join (const Identity v1_id, const Identity v2_id)
+// Return false if v1_id or v2_id doesn't exist or are in different graphs,
+//  or are already joint.
+{
+    auto v1_it = register_.find(v1_id);
+    auto v2_it = register_.find(v2_id);
+    if (v1_it == register_.end() ||
+        v2_it == register_.end() ||
+        v1_it->second != v2_it->second) {
+        return false;
+    }
+
+    // Create new edge id, and join v1 & v2.
+    Identity e_id;
+    try {
+        e_id = newIdentity();
+    }
+    catch (OverflowExcept &err) {
+        return false;
+    }
+
+    if (base_.join(e_id, v1_id, v2_id) == NULL) {
+        return false;
+    }
+    return true;
+}
+
+bool LogicController::disjoin (const Identity v1_id, const Identity v2_id)
+// Return false if v1_id or v2_id doesn't exist or are in different graphs,
+//  or are not joint.
+{
+    auto v1_it = register_.find(v1_id);
+    auto v2_it = register_.find(v2_id);
+    if (v1_it == register_.end() ||
+        v2_it == register_.end() ||
+        v1_it->second != v2_it->second) {
+        return false;
+    }
+
+    return base_.disjoin(v1_id, v2_id);
+}
+
 Identity LogicController::newIdentity ()
 {
     if (idCount_ >= UINT32_MAX) {
