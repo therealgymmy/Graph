@@ -10,12 +10,11 @@
 #include <map>
 #include <set>
 #include <string>
-#include <vector>
 #include "ModelTypes.h"
 
 class Vertex {
 public:
-    typedef std::vector<Identity> NeighbourList;
+    typedef std::set<Identity> NeighbourList;
 
 //--Constructor
     Vertex (const Identity id) noexcept;

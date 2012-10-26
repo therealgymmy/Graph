@@ -28,6 +28,76 @@ LogicController::~LogicController ()
                   });
 }
 
+bool LogicController::hasGraph (const Identity g_id) const
+{
+    if (graphs_.find(g_id) == graphs_.end()) {
+        return false;
+    }
+    return true;
+}
+
+bool LogicController::hasVertex (const Identity v_id) const
+{
+    if (register_.find(v_id) == register_.end()) {
+        return false;
+    }
+    return true;
+}
+
+bool LogicController::isJointBetween (const Identity v1_id, const Identity v2_id) const
+{
+    if (!hasVertex(v1_id) || !hasVertex(v2_id)) {
+        return false;
+    }
+    return base_.isJoint(v1_id, v2_id);
+}
+
+Identity LogicController::graphOf (const Identity v_id) const
+{
+    auto it = register_.find(v_id);
+    if (it == register_.end()) {
+        throw BadArgumentExcept();
+    }
+    return it->second;
+}
+
+Graph::VertexList LogicController::verticesOf (const Identity g_id) const
+{
+    auto it = graphs_.find(g_id);
+    if (it == graphs_.end()) {
+        throw BadArgumentExcept();
+    }
+    return it->second->getVertices();
+}
+
+Graph::VertexList LogicController::neighboursOf (const Identity v_id) const
+{
+    if (!hasVertex(v_id)) {
+        throw BadArgumentExcept();
+    }
+    return base_.getNeighbours(v_id);
+}
+
+Graph::GraphList LogicController::allGraphs () const
+{
+    Graph::GraphList list;
+    std::for_each(graphs_.begin(), graphs_.end(),
+                  [&] (std::pair<Identity, Graph*> it) {
+                      list.insert(it.first);
+                  });
+    return list;
+}
+
+Graph::VertexList LogicController::allVertices () const
+{
+    Graph::VertexList list;
+    std::for_each(register_.begin(), register_.end(),
+                  [&] (std::pair<Identity, Identity> it) {
+                      list.insert(it.first);
+                  });
+    return list;
+}
+
 Identity LogicController::newGraph ()
 // Create a new graph, assign idCount_, and increment idCount_.
 {

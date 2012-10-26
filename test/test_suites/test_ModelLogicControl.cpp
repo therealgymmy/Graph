@@ -48,6 +48,19 @@ TestStatus ModelLogicControl::GraphCreation ()
         __return_status(TestStatus::FAIL);
     }
 
+    if (!LogicControl.hasGraph(g1) ||
+        !LogicControl.hasGraph(g2)) {
+        __log_print << "Graphs do not exist";
+        __return_status(TestStatus::FAIL);
+    }
+
+    Graph::GraphList list = LogicControl.allGraphs();
+    if (list.find(1) == list.end() ||
+        list.find(2) == list.end()) {
+        __log_print << "Cannot find graph";
+        __return_status(TestStatus::FAIL);
+    }
+
     __return_status(TestStatus::PASS);
 }
 
@@ -82,6 +95,46 @@ TestStatus ModelLogicControl::VertexCreation ()
         __return_status(TestStatus::FAIL);
     }
 
+    if (!LogicControl.hasVertex(v1) ||
+        !LogicControl.hasVertex(v2) ||
+        !LogicControl.hasVertex(v3) ||
+        !LogicControl.hasVertex(v4) ||
+        !LogicControl.hasVertex(v5)) {
+        __log_print << "Vertices do not exist";
+        __return_status(TestStatus::FAIL);
+    }
+
+    if (LogicControl.graphOf(v1) != 1) {
+        __log_print << "v1 is not in g1";
+        __return_status(TestStatus::FAIL);
+    }
+    if (LogicControl.graphOf(v2) != 1) {
+        __log_print << "v2 is not in g1";
+        __return_status(TestStatus::FAIL);
+    }
+    if (LogicControl.graphOf(v3) != 2) {
+        __log_print << "v3 is not in g2";
+        __return_status(TestStatus::FAIL);
+    }
+    if (LogicControl.graphOf(v4) != 2) {
+        __log_print << "v4 is not in g2";
+        __return_status(TestStatus::FAIL);
+    }
+    if (LogicControl.graphOf(v5) != 2) {
+        __log_print << "v5 is not in g2";
+        __return_status(TestStatus::FAIL);
+    }
+
+    Graph::VertexList list = LogicControl.allVertices();
+    if (list.find(3) == list.end() ||
+        list.find(4) == list.end() ||
+        list.find(5) == list.end() ||
+        list.find(5) == list.end() ||
+        list.find(7) == list.end()) {
+        __log_print << "Cannot find graph";
+        __return_status(TestStatus::FAIL);
+    }
+
     __return_status(TestStatus::PASS);
 }
 
@@ -108,6 +161,17 @@ TestStatus ModelLogicControl::VertexConnection ()
     }
     if (LogicControl.join(3, 7) == true) {
         __log_print << "Joint 3 & 7, but they are from different graphs";
+        __return_status(TestStatus::FAIL);
+    }
+
+    if (!LogicControl.isJointBetween(3, 4) ||
+        !LogicControl.isJointBetween(5, 6)) {
+        __log_print << "vertices are not joint";
+        __return_status(TestStatus::FAIL);
+    }
+
+    if (LogicControl.isJointBetween(3, 6)) {
+        __log_print << "vertices not joint are said to be joint";
         __return_status(TestStatus::FAIL);
     }
 
@@ -138,6 +202,10 @@ TestStatus ModelLogicControl::VertexDisconnection ()
     if (LogicControl.disjoin(3, 7) == true) {
         __log_print << "disjoint 3 & 7, but they are from different graphs"
                        " and are not connected";
+        __return_status(TestStatus::FAIL);
+    }
+    if (LogicControl.isJointBetween(3, 7)) {
+        __log_print << "vertices not joint are said to be joint";
         __return_status(TestStatus::FAIL);
     }
     __return_status(TestStatus::PASS);

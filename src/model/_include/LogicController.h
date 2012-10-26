@@ -31,9 +31,10 @@ public:
     bool hasVertex (const Identity v_id) const;
     bool isJointBetween (const Identity v1_id, const Identity v2_id) const;
 
-    Identity          graphOf      (const Identity v_id) const;
-    Graph::VertexList verticesOf   (const Identity g_id) const;
-    Graph::VertexList neighboursOf (const Identity v_id) const;
+    // Pre: id must be valid
+    Identity          graphOf      (const Identity v_id) const; // may throw
+    Graph::VertexList verticesOf   (const Identity g_id) const; // may throw
+    Graph::VertexList neighboursOf (const Identity v_id) const; // may throw
 
     Graph::GraphList  allGraphs   () const;
     Graph::VertexList allVertices () const;
