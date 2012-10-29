@@ -155,6 +155,10 @@ TestStatus ModelLogicControl::VertexConnection ()
         __log_print << "Cannot join 5 & 7";
         __return_status(TestStatus::FAIL);
     }
+    if (LogicControl.join(6, 7) == false) {
+        __log_print << "Cannot join 6 & 7";
+        __return_status(TestStatus::FAIL);
+    }
     if (LogicControl.join(5, 7) == true) {
         __log_print << "Joint 5 & 7 for a second time";
         __return_status(TestStatus::FAIL);

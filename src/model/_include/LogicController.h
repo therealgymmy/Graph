@@ -5,6 +5,8 @@
 // Graphs and its associated vertices and edges are managed here.
 // Also responsible for determining all sorts of graph theory relations.
 //
+// LogicController class is also responsible for creation/deletion of graphs.
+//
 // Note:
 // This is NOT a *Controller* (as the C in MVC) type of facility.
 // Although the interface here presents a relatively high abstraction of the

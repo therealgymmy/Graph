@@ -4,6 +4,9 @@
 // Dependencies
 #include <cstdint>
 
+//--- Defines ---//
+#define NULL_IDENTITY 0
+
 //--- Forward Declaration ---//
 class BaseController;
 class Edge;

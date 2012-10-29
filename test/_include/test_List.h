@@ -7,8 +7,13 @@
 
 enum class TestType {
     SAMPLE_SUITE,
+
+    // Basic Model Unit Tests
     MODEL_BASE_CONTROL,
     MODEL_LOGIC_CONTROL,
+
+    // Algorithm Unit Tests
+    ALG_CYCLE_DETECT,
 };
 
 typedef std::pair<TestType, Test*> TestSuite;

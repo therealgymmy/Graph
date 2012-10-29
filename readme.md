@@ -31,6 +31,7 @@ Compile and Test
 #### Source Organization
     src/ ---> common/ ---> _include/
          ---> model/  ---> _include/
+                      ---> algorithm/
                       ---> base/
                       ---> core/
          ---> main.cpp
