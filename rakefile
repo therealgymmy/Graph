@@ -5,7 +5,11 @@ AUTHOR       = "Jimmy Lu"
 GITHUB       = "https://github.com/BeyondSora/Graph"
 
 CC = "g++"
-@CFLAGS = " -std=c++11 -Wall -Wextra"
+STANDARD = " -std=c++11 -Wall -Wextra"
+EXTERNAL_FLAGS = " -DTINYFORMAT_USE_VARIADIC_TEMPLATES"
+LIB= ""
+
+@CFLAGS = STANDARD + EXTERNAL_FLAGS
 
 PROG = "graph"
 SRC = FileList['src/**/*.cpp',
@@ -62,7 +66,7 @@ task :test => "debug" do
 end
 
 file PROG => OBJ do
-  sh "#{CC} #{@CFLAGS} -o #{PROG} #{OBJ}"
+  sh "#{CC} #{@CFLAGS} -o #{PROG} #{OBJ} #{LIB}"
 end
 
 directory OBJDIR
