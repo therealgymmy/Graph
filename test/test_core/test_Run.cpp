@@ -11,6 +11,7 @@
 #include "../_include/test_ModelLogicControl.h"
 #include "../_include/test_CycleDetect.h"
 #include "../_include/test_ViewConsoleControl.h"
+#include "../_include/test_Controller.h"
 
 void initTest ()
 {
@@ -19,6 +20,7 @@ void initTest ()
     TestList.tests_[TestType::MODEL_LOGIC_CONTROL] = new ModelLogicControl();
     TestList.tests_[TestType::ALG_CYCLE_DETECT] = new Alg_CycleDetect();
     TestList.tests_[TestType::VIEW_CONSOLE_CONTROL] = new ViewConsoleControl();
+    TestList.tests_[TestType::CONTROLLER] = new ControllerTest();
 }
 
 void runTest ()

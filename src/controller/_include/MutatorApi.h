@@ -1,8 +1,9 @@
 #ifndef MUTATOR_API_H
 #define MUTATOR_API_H
 
-#include "Result.h"
-#include "Types.h"
+// Dependencies
+#include "../../common/_include/Result.h"
+#include "../../common/_include/Types.h"
 
 class MutatorApi {
 public:
@@ -17,6 +18,10 @@ public:
 //--Resource Management
     virtual Result join    (const Identity vertex1, const Identity vertex2) = 0;
     virtual Result disjoin (const Identity vertex1, const Identity vertex2) = 0;
+
+protected:
+    MutatorApi () = default;
+    virtual ~MutatorApi () = default;
 };
 
 #endif//MUTATOR_API_H

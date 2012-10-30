@@ -7,12 +7,13 @@
 class Result {
 public:
     enum Type {
+        BOOL,
         ID,
         ID_LIST,
     };
 
 //--Constructor
-    Result (Type type, bool isSuccess = false);
+    Result (Type type, bool isSuccess);
 
 //--Accessor
     operator bool () const { return isSuccess_; }
@@ -27,10 +28,10 @@ public:
 private:
     Type type_;
     bool isSuccess_;
-    union {
-        Identity id_;
-        IdentityList idList_;
-    };
+
+    // Return Fields
+    Identity id_;
+    IdentityList idList_;
 
     void validate (Type type) const;
 };

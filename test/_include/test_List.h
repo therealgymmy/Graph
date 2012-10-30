@@ -15,6 +15,9 @@ enum class TestType {
     // Algorithm Unit Tests
     ALG_CYCLE_DETECT,
 
+    // Model Unit Tests
+    CONTROLLER,
+
     // User Interface Unit Tests
     VIEW_CONSOLE_CONTROL,
 };

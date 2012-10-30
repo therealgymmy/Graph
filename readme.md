@@ -28,20 +28,29 @@ Compile and Test
 * `rake run` runs the executable.
 * `rake test` runs the executable within valgrind (with --leak-check=full).
 
+#### Project Organization
+    Graph/ ---> ext/                [External libraries/resources]
+           ---> obj/                [Object files (not synced)]
+           ---> src/                [Source files]
+           ---> test/               [Unit test source files]
+           ---> rakefile
+           ---> readme.md
+           ---> test_results.log    [Log file (not synced)]
+           ---> ...more misc stuff
+
 #### Source Organization
-    src/ ---> common/ ---> _include/
-         ---> model/  ---> _include/
-                      ---> algorithm/
-                      ---> base/
-                      ---> core/
+    src/ ---> common/
+         ---> controller/
+         ---> external/
+         ---> model/
+         ---> view/
          ---> main.cpp
 
 * `src` is the place for all program source code.
 * `common` is for facilities such as exception handling.
-* `model` is the part that handles internal logic of the program.
-* `_include` within each directory stores all corresponding header files.
-
-In the near future, `controller` and `view` will be added to handle external requests.
+* `model` handles internal logic of the program.
+* `controller` handles communication between `view` and `model`.
+* `view` is the user interface component.
 
 #### Test Organization
     test/ ---> _include/
