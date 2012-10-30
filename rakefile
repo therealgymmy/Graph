@@ -7,7 +7,7 @@ GITHUB       = "https://github.com/BeyondSora/Graph"
 CC = "g++"
 STANDARD = " -std=c++11 -Wall -Wextra"
 EXTERNAL_FLAGS = " -DTINYFORMAT_USE_VARIADIC_TEMPLATES"
-LIB= ""
+LIB= "-lncurses"
 
 @CFLAGS = STANDARD + EXTERNAL_FLAGS
 

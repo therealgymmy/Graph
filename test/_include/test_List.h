@@ -14,6 +14,9 @@ enum class TestType {
 
     // Algorithm Unit Tests
     ALG_CYCLE_DETECT,
+
+    // User Interface Unit Tests
+    VIEW_CONSOLE_CONTROL,
 };
 
 typedef std::pair<TestType, Test*> TestSuite;
