@@ -6,10 +6,11 @@ GITHUB       = "https://github.com/BeyondSora/Graph"
 
 CC = "g++"
 STANDARD = " -std=c++11 -Wall -Wextra"
-EXTERNAL_FLAGS = " -DTINYFORMAT_USE_VARIADIC_TEMPLATES"
-LIB= "-lncurses"
+DEFINES = " "
+EXT_DEFINES = " -DTINYFORMAT_USE_VARIADIC_TEMPLATES"
+LIB= ""
 
-@CFLAGS = STANDARD + EXTERNAL_FLAGS
+@CFLAGS = STANDARD + DEFINES + EXT_DEFINES
 
 PROG = "graph"
 SRC = FileList['src/**/*.cpp',

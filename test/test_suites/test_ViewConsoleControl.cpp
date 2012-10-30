@@ -10,8 +10,5 @@ TestStatus ViewConsoleControl::run ()
 {
     __enter;
 
-    ConsoleMain main;
-    main.start();
-
     __return(TestStatus::PASS);
 }

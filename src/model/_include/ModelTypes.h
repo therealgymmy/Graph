@@ -2,7 +2,7 @@
 #define MODEL_TYPES_H
 
 // Dependencies
-#include <cstdint>
+#include "../../common/_include/Types.h"
 
 //--- Defines ---//
 #define NULL_IDENTITY 0
@@ -13,8 +13,5 @@ class Edge;
 class Graph;
 class Vertex;
 //******************************************************************//
-
-//--- Typedefs ---//
-typedef uint32_t Identity;
 
 #endif//MODEL_TYPES_H

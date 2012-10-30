@@ -7,13 +7,16 @@ class ExceptionBase {
 class RuntimeExcept : public ExceptionBase {
 };
 
-class BadArgumentExcept : public RuntimeExcept {
+class LogicExcept : public ExceptionBase {
 };
 
 class MemoryExcept : public RuntimeExcept {
 };
 
 class NumericExcept : public RuntimeExcept {
+};
+
+class BadArgumentExcept : public LogicExcept {
 };
 
 class OverflowExcept : public NumericExcept {
