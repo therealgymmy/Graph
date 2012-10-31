@@ -4,14 +4,17 @@
 // Controller
 //  - translates requests from View to Model and vice versa.
 //  - is a vessel for data transportation, not storage.
+//  - resource related functions notify() observers.
 
 // Dependencies
+#include "../../common/_include/Subject.h"
 #include "../../model/_include/AlgorithmController.h"
 #include "../../model/_include/LogicController.h"
 #include "AccessorApi.h"
 #include "MutatorApi.h"
 
-class Controller : public AccessorApi,
+class Controller : public Subject,
+                   public AccessorApi,
                    public MutatorApi {
 public:
 //--Constructor

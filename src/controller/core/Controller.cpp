@@ -90,6 +90,7 @@ try
 {
     Result result(Result::ID, true);
     result.setId(logic_->newGraph());
+    notify();
     return result;
 }
 catch (OverflowExcept &err)
@@ -102,29 +103,42 @@ try
 {
     Result result(Result::ID, true);
     result.setId(logic_->newVertex(graph));
+    notify();
     return result;
 }
 catch (OverflowExcept &err)
 {
     return Result(Result::ID, false);
 }
+catch (BadArgumentExcept &err)
+{
+    return Result(Result::ID, false);
+}
 
 Result Controller::remGraph (const Identity graph)
 {
-    return Result(Result::BOOL, logic_->remGraph(graph));
+    Result result(Result::BOOL, logic_->remGraph(graph));
+    notify();
+    return result;
 }
 
 Result Controller::remVertex (const Identity vertex)
 {
-    return Result(Result::BOOL, logic_->remVertex(vertex));
+    Result result(Result::BOOL, logic_->remVertex(vertex));
+    notify();
+    return result;
 }
 
 Result Controller::join (const Identity vertex1, const Identity vertex2)
 {
-    return Result(Result::BOOL, logic_->join(vertex1, vertex2));
+    Result result(Result::BOOL, logic_->join(vertex1, vertex2));
+    notify();
+    return result;
 }
 
 Result Controller::disjoin (const Identity vertex1, const Identity vertex2)
 {
-    return Result(Result::BOOL, logic_->disjoin(vertex1, vertex2));
+    Result result(Result::BOOL, logic_->disjoin(vertex1, vertex2));
+    notify();
+    return result;
 }
