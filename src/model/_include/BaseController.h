@@ -8,10 +8,12 @@
 
 // Dependencies
 #include "ModelTypes.h"
+#include "Resource.h"
 #include "Vertex.h"
 
 class BaseController {
 public:
+    BaseController (Storage &stack = Stack);
     static BaseController& Instance() { return instance_; }
 
 //--Accessor to Stack
@@ -38,6 +40,7 @@ public:
 
 private:
     static BaseController instance_;
+    Storage &stack_;
 
 //--Accessor
     Edge* commonEdge (const Vertex *v1, const Vertex *v2) const;

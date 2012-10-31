@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <utility>
 #include "../../common/_include/Exception.h"
-#include "../_include/BaseController.h"
 #include "../_include/Resource.h"
 #include "../_include/SimpleGraph.h"
 
@@ -12,19 +11,33 @@
 
 LogicController LogicController::instance_;
 
-LogicController::LogicController ()
-: base_(BaseControl),
+LogicController::LogicController (BaseController &base)
+: base_(base),
   idCount_(INITIAL_ID)
 // Do nothing.
 {
 }
 
+#include <iostream>
+
 LogicController::~LogicController ()
 // Clean up all graphs.
 {
+    clear();
+}
+
+void LogicController::clear ()
+{
+    IdentityList list;
     std::for_each(graphs_.begin(), graphs_.end(),
-                  [] (std::pair<Identity, Graph*> it) {
-                      delete it.second;
+                  [&] (std::pair<Identity, Graph*> it) {
+                      //delete it.second;
+                  std::cout << it.first << std::endl;
+                      list.insert(it.first);
+                  });
+    std::for_each(list.begin(), list.end(),
+                  [&] (Identity g) {
+                      remGraph(g);
                   });
 }
 

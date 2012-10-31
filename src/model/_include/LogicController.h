@@ -14,13 +14,14 @@
 
 // Dependencies
 #include <map>
+#include "BaseController.h"
 #include "Graph.h"
 #include "ModelTypes.h"
 
 class LogicController {
 public:
 //--Constructor
-    LogicController ();
+    LogicController (BaseController &base = BaseControl);
 
 //--Destructor
     ~LogicController ();
@@ -53,6 +54,7 @@ public:
     bool join    (const Identity v1_id, const Identity v2_id);
     bool disjoin (const Identity v1_id, const Identity v2_id);
 
+    void clear ();
 private:
     static LogicController instance_;
     BaseController &base_;

@@ -58,8 +58,8 @@ void ConsoleMain::hint ()
              << "    HELP\n"
              << "    CREATE GRAPH\n"
              << "    CREATE VERTEX AT <Graph ID>\n"
-             << "    JOIN VERTEX <Vertex1 ID> <Vertex2 ID>\n"
-             << "    DISJOIN VERTEX <Vertex1 ID> <Vertex2 ID>\n";
+             << "    JOIN <Vertex1 ID> <Vertex2 ID>\n"
+             << "    DISJOIN <Vertex1 ID> <Vertex2 ID>\n";
     refresh();
 }
 

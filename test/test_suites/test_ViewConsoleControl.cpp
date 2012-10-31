@@ -14,8 +14,12 @@ TestStatus ViewConsoleControl::run ()
     __enter;
 
     __checkpoint("Console Unit Test");
-    Controller control(&LogicControl, &AlgorithmControl);
+    Storage stack;
+    BaseController base(stack);
+    LogicController logic(base);
+    Controller control(&logic, &AlgorithmControl);
     ConsoleMain console(&control);
+
     control.subscribe(&console);
 
     console.start();
