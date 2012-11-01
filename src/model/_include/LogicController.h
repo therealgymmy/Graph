@@ -22,6 +22,7 @@ class LogicController {
 public:
 //--Constructor
     LogicController (BaseController &base = BaseControl);
+    LogicController (LogicController &rhs) = delete;
 
 //--Destructor
     ~LogicController ();

@@ -13,7 +13,10 @@
 
 class BaseController {
 public:
+//--Constructor
     BaseController (Storage &stack = Stack);
+    BaseController (BaseController &rhs) = delete;
+
     static BaseController& Instance() { return instance_; }
 
 //--Accessor to Stack

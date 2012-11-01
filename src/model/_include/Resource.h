@@ -14,6 +14,9 @@ public:
     typedef std::pair<Edge*,   RefCount> EdgePair;
     typedef std::pair<Vertex*, RefCount> VertexPair;
 
+    Storage () = default;
+    Storage (Storage &rhs) = delete;
+
     static Storage& Instance() { return instance_; }
 
     Edge*   getEdge   (const Identity id);    // may throw
