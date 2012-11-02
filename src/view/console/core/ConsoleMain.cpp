@@ -29,6 +29,8 @@ void ConsoleMain::start ()
             case ERROR:
                 Print("Error in Operation!\n");
                 break;
+            default:
+                break;
         }
     }
 }
@@ -69,21 +71,21 @@ ConsoleMain::Command ConsoleMain::interaction ()
     std::string input;
     while (std::cin >> input) {
         if (input == "EXIT") {
-            return Command{ .type_ = Command::EXIT };
+            return Command{ .type_ = Command::EXIT, {0} };
         }
         else if (input == "INFO") {
-            return Command{ .type_ = Command::INFO };
+            return Command{ .type_ = Command::INFO, {0} };
         }
         else if (input == "HELP") {
-            return Command{ .type_ = Command::HELP };
+            return Command{ .type_ = Command::HELP, {0} };
         }
         else if (input == "CREATE") {
             std::cin >> input;
             if (input == "GRAPH") {
-                return Command{ .type_ = Command::NEW_GRAPH };
+                return Command{ .type_ = Command::NEW_GRAPH, {0} };
             }
             else if (input == "VERTEX") {
-                Command cmd = { .type_ = Command::NEW_VERTEX_AT };
+                Command cmd = { .type_ = Command::NEW_VERTEX_AT, {0} };
                 std::cin >> input;
                 if (input != "AT") {
                     cmd.type_ = Command::ERROR;
@@ -99,13 +101,13 @@ ConsoleMain::Command ConsoleMain::interaction ()
                 return cmd;
             }
             else {
-                return Command{ .type_ = Command::ERROR };
+                return Command{ .type_ = Command::ERROR, {0} };
             }
         }
         else if (input == "REMOVE") {
             std::cin >> input;
             if (input == "GRAPH") {
-                Command cmd = { .type_ = Command::REM_GRAPH };
+                Command cmd = { .type_ = Command::REM_GRAPH, {0} };
                 Identity graph;
                 if (!(std::cin >> graph)) {
                     std::cin.clear();
@@ -116,7 +118,7 @@ ConsoleMain::Command ConsoleMain::interaction ()
                 return cmd;
             }
             else if (input == "VERTEX") {
-                Command cmd = { .type_ = Command::REM_VERTEX };
+                Command cmd = { .type_ = Command::REM_VERTEX, {0} };
                 Identity vertex;
                 if (!(std::cin >> vertex)) {
                     std::cin.clear();
@@ -128,7 +130,7 @@ ConsoleMain::Command ConsoleMain::interaction ()
             }
         }
         else if (input == "JOIN") {
-            Command cmd = { .type_ = Command::JOIN };
+            Command cmd = { .type_ = Command::JOIN, {0} };
             Identity vertex1;
             if (!(std::cin >> vertex1)) {
                 std::cin.clear();
@@ -146,7 +148,7 @@ ConsoleMain::Command ConsoleMain::interaction ()
             return cmd;
         }
         else if (input == "DISJOIN") {
-            Command cmd = { .type_ = Command::DISJOIN };
+            Command cmd = { .type_ = Command::DISJOIN, {0} };
             Identity vertex1;
             if (!(std::cin >> vertex1)) {
                 std::cin.clear();
@@ -164,9 +166,12 @@ ConsoleMain::Command ConsoleMain::interaction ()
             return cmd;
         }
         else {
-            return Command{ .type_ = Command::ERROR };
+            return Command{ .type_ = Command::ERROR, {0} };
         }
     }
+
+    // For consistency, control should never reach here.
+    return Command { .type_ = Command::ERROR, {0} };
 }
 
 ConsoleMain::Status ConsoleMain::Process (const Command *cmd)
