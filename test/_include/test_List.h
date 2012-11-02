@@ -20,6 +20,7 @@ enum class TestType {
 
     // User Interface Unit Tests
     VIEW_CONSOLE_CONTROL,
+    VIEW_CMD_PARSER,
 };
 
 typedef std::pair<TestType, Test*> TestSuite;

@@ -19,6 +19,9 @@ class NumericExcept : public RuntimeExcept {
 class BadArgumentExcept : public LogicExcept {
 };
 
+class BadTokenExcept : public LogicExcept {
+};
+
 class OverflowExcept : public NumericExcept {
 };
 

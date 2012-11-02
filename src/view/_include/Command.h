@@ -29,7 +29,7 @@
 //  4)  remove vertex @11 and @12 and @13 and @14 and @15;
 
 // Dependencies
-#include <set>
+#include <vector>
 #include <string>
 
 namespace cmd {
@@ -73,24 +73,24 @@ public:
     };
 
 //--Constructor
-    Token (Type type, std::string lexeme);
+    Token (Type type, std::string lexeme) : type_(type), lexeme_(lexeme) {}
+    Token (const Token &rhs) : type_(rhs.type()), lexeme_(rhs.lexeme()) {}
 
 //--Comparison Operator
-    bool operator== (Token &rhs);
+    bool operator== (const Token &rhs) {
+        return (type_ == rhs.type_ && lexeme_ == rhs.lexeme_);
+    }
 
 //--Accessor
-    Type        type   () const;
-    std::string lexeme () const;
-
-//--Mutator
-    void tokenize ();
+    Type        type   () const { return type_; }
+    std::string lexeme () const { return lexeme_; }
 
 private:
     Type type_;
     std::string lexeme_;
 };
 
-std::set<Token> tokenize(std::string input);
+std::vector<Token> tokenize(const std::string &input);
 
 }
 
