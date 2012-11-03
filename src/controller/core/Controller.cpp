@@ -51,9 +51,9 @@ catch (BadArgumentExcept &err)
 Result Controller::verticesOf (const Identity graph) const
 try
 {
-    IdentityList neighbours = logic_->verticesOf(graph);
+    IdentityList vertices = logic_->verticesOf(graph);
     Result result(Result::ID_LIST, true);
-    result.setIdList(neighbours);
+    result.setIdList(vertices);
     return result;
 }
 catch (BadArgumentExcept &err)

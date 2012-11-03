@@ -14,6 +14,10 @@ public:
 
 //--Constructor
     Result (Type type, bool isSuccess);
+    Result (const Result &rhs);
+
+//--Destructor
+    ~Result () { /* Required for non-trivial union member idList_ */ };
 
 //--Accessor
     operator bool () const { return isSuccess_; }
@@ -30,8 +34,11 @@ private:
     bool isSuccess_;
 
     // Return Fields
-    Identity id_;
-    IdentityList idList_;
+    union {
+        Identity id_;
+        IdentityList idList_; // Has non-trivial ctor - sepcial handling.
+                              // Refer to Result.cpp for details.
+    };
 
     void validate (Type type) const;
 };
