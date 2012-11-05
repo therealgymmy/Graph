@@ -5,7 +5,7 @@
 
 class SampleSuite: public Test {
 public:
-    virtual TestStatus run();
+    virtual TestStatus run() override;
 
 private:
     // Put additional support functions here.

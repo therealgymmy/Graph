@@ -10,19 +10,6 @@ namespace cmd {
 class Token {
 public:
     enum Type {
-        /*
-        QUERY,
-        CONDITION,
-        OPERATION,
-        STATEMENT,
-
-        ACTION,
-        RESOURCE,
-        MODIFIER,
-
-        TARGET,
-        */
-
         // Condition
         REPEAT,
 

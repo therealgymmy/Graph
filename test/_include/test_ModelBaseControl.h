@@ -5,7 +5,7 @@
 
 class ModelBaseControl: public Test {
 public:
-    TestStatus run ();
+    virtual TestStatus run () override;
 
 private:
     TestStatus BaseTest ();

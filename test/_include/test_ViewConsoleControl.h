@@ -5,7 +5,7 @@
 
 class ViewConsoleControl : public Test {
 public:
-    TestStatus run ();
+    virtual TestStatus run () override;
 };
 
 #endif//TEST_VIEW_CONSOLE_CONTROL_H

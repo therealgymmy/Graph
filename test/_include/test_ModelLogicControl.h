@@ -5,7 +5,7 @@
 
 class ModelLogicControl: public Test {
 public:
-    TestStatus run ();
+    virtual TestStatus run () override;
 
 private:
     TestStatus GraphCreation ();

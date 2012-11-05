@@ -31,8 +31,6 @@ void LogicController::clear ()
     IdentityList list;
     std::for_each(graphs_.begin(), graphs_.end(),
                   [&] (std::pair<Identity, Graph*> it) {
-                      //delete it.second;
-                  std::cout << it.first << std::endl;
                       list.insert(it.first);
                   });
     std::for_each(list.begin(), list.end(),

@@ -1,8 +1,6 @@
 #include "../_include/Command.h"
 
 // Dependencies
-#include <array>
-#include <cstdint>
 #include "../../common/_include/Exception.h"
 #include "../_include/DeltaInitMacro.h"
 

@@ -21,32 +21,32 @@ public:
     Controller (LogicController *logic, AlgorithmController *alg);
 
 //--Basic Query
-    virtual Result hasGraph  (const Identity graph)  const;
-    virtual Result hasVertex (const Identity vertex) const;
+    virtual Result hasGraph  (const Identity graph)  const override;
+    virtual Result hasVertex (const Identity vertex) const override;
     virtual Result isJointBetween (const Identity vertex1,
-                                   const Identity vertex2) const;
+                                   const Identity vertex2) const override;
 
-    virtual Result graphOf      (const Identity vertex) const;
-    virtual Result neighboursOf (const Identity vertex) const;
-    virtual Result verticesOf   (const Identity graph)  const;
+    virtual Result graphOf      (const Identity vertex) const override;
+    virtual Result neighboursOf (const Identity vertex) const override;
+    virtual Result verticesOf   (const Identity graph)  const override;
 
-    virtual Result allGraphs   () const;
-    virtual Result allVertices () const;
+    virtual Result allGraphs   () const override;
+    virtual Result allVertices () const override;
 
 //--Algorithm
-    virtual Result hasCycleAt (const Identity graph) const;
+    virtual Result hasCycleAt (const Identity graph) const override;
 
 //--Resource Creation
-    virtual Result newGraph ();
-    virtual Result newVertexAt (const Identity graph);
+    virtual Result newGraph () override;
+    virtual Result newVertexAt (const Identity graph) override;
 
 //--Resource Deletion
-    virtual Result remGraph  (const Identity graph) ;
-    virtual Result remVertex (const Identity vertex);
+    virtual Result remGraph  (const Identity graph)  override;
+    virtual Result remVertex (const Identity vertex) override;
 
 //--Resource Management
-    virtual Result join    (const Identity vertex1, const Identity vertex2);
-    virtual Result disjoin (const Identity vertex1, const Identity vertex2);
+    virtual Result join    (const Identity vertex1, const Identity vertex2) override;
+    virtual Result disjoin (const Identity vertex1, const Identity vertex2) override;
 
 private:
     LogicController *logic_;

@@ -5,7 +5,7 @@
 
 class ViewCmdParser : public Test {
 public:
-    TestStatus run ();
+    virtual TestStatus run () override;
 };
 
 #endif//TEST_VIEW_CMD_PARSER_H

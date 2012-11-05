@@ -5,7 +5,7 @@
 
 class Alg_CycleDetect : public Test {
 public:
-    TestStatus run ();
+    virtual TestStatus run () override;
 
 private:
     TestStatus test1 ();

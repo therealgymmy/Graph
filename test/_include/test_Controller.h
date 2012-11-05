@@ -8,7 +8,7 @@
 
 class ControllerTest: public Test {
 public:
-    TestStatus run ();
+    virtual TestStatus run () override;
 
 private:
     TestStatus exceptionSafe (Controller *control);
