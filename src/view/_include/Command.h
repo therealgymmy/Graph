@@ -1,33 +1,6 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-// A query is of the following format.
-//
-// <QUERY>     -> <CONDITION> <LBRACE> <OPERATION> <RBRACE>
-//
-// <CONDITION> -> <REPEAT> <COLON> <NUMBER>
-//
-// <OPERATION> -> <OPERATION> <STATEMENT>
-//
-// <STATEMENT> -> <ACTION> <RESOURCE> <MODIFIER> <SEMICOLON>
-//
-// <MODIFIER>  -> <AT> <RESOURCE> <ID>
-//             -> <TARGET>
-//
-// <TARGET>    -> <TARGET> <AND> <ID>
-//             -> <ID>
-//
-// Example:
-//  1)  join vertex @15 and @20;
-//
-//  2)  repeat : 5 {
-//          create vertex at graph @1 and @7;
-//      }
-//
-//  3)  merge graph @7 and @38;
-//
-//  4)  remove vertex @11 and @12 and @13 and @14 and @15;
-
 // Dependencies
 #include <vector>
 #include <string>
