@@ -37,6 +37,8 @@ There are four types of token: `ID`, `NUMBER`, `SYMBOL` and `KEYWORD`.
 * `UNMERGE`
 * `AT`
 * `AND`
+* `HAS`
+* `CYCLE`
 
 Grammar
 -------
@@ -53,6 +55,8 @@ The grammar is of LR1 form as below.
     
     <MODIFIER>     ->    <AT> <RESOURCE> <ID>
                    ->    <TARGET>
+                   ->    <ID>
+                   ->    NULL
     
     <TARGET>       ->    <TARGET> <AND> <ID>
                    ->    <ID>
@@ -64,14 +68,16 @@ The grammar is of LR1 form as below.
                    ->    <DISJOIN>
                    ->    <MERGE>
                    ->    <UNMERGE>
+                   ->    <HAS>
     
     <RESOURCE>     ->    <GRAPH>
                    ->    <VERTEX>
+                   ->    <CYCLE>
 
 Example
 -------
 
-* `join vertex @15 and @20;`
-* `repeat : 5 { create vertex at graph @1 and @7; }`
-* `merge graph @7 and @38;`
-* `remove vertex @11 and @12 and @13 and @14 and @15;`
+* `JOIN VERTEX @15 AND @20;`
+* `REPEAT : 5 { CREATE VERTEX AT GRAPH @1 AND @7; }`
+* `MERGE GRAPH @7 AND @38;`
+* `REMOVE VERTEX @11 AND @12 AND @13 AND @14 AND @15;`

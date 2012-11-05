@@ -29,7 +29,8 @@ Compile and Test
 * `rake test` runs the executable within valgrind (with --leak-check=full).
 
 #### Project Organization
-    Graph/ ---> ext/                [External libraries/resources]
+    Graph/ ---> doc/                [Documentation]
+           ---> ext/                [External libraries/resources]
            ---> obj/                [Object files (not synced)]
            ---> src/                [Source files]
            ---> test/               [Unit test source files]
