@@ -20,7 +20,7 @@ void initTest ()
     TestList.tests_[TestType::MODEL_BASE_CONTROL] = new ModelBaseControl();
     TestList.tests_[TestType::MODEL_LOGIC_CONTROL] = new ModelLogicControl();
     TestList.tests_[TestType::ALG_CYCLE_DETECT] = new Alg_CycleDetect();
-    //TestList.tests_[TestType::VIEW_CONSOLE_CONTROL] = new ViewConsoleControl();
+    TestList.tests_[TestType::VIEW_CONSOLE_CONTROL] = new ViewConsoleControl();
     TestList.tests_[TestType::CONTROLLER] = new ControllerTest();
     TestList.tests_[TestType::VIEW_CMD_PARSER] = new ViewCmdParser();
 }

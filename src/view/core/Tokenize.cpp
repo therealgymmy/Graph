@@ -119,8 +119,10 @@ Token::Type getType (const std::string &lexeme, State state)
     else if (lexeme == "DISJOIN")   { return Token::DISJOIN; }
     else if (lexeme == "MERGE")     { return Token::MERGE; }
     else if (lexeme == "UNMERGE")   { return Token::UNMERGE; }
+    else if (lexeme == "HAS")       { return Token::HAS; }
     else if (lexeme == "GRAPH")     { return Token::GRAPH; }
     else if (lexeme == "VERTEX")    { return Token::VERTEX; }
+    else if (lexeme == "CYCLE")     { return Token::CYCLE; }
     else if (lexeme == "AT")        { return Token::AT; }
     else if (lexeme == "AND")       { return Token::AND; }
     else {

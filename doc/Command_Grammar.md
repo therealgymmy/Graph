@@ -43,6 +43,7 @@ Grammar
 The grammar is of LR1 form as below.
 
     <QUERY>        ->    <CONDITION> <LBRACE> <OPERATION> <RBRACE>
+                   ->    <STATEMENT>
     
     <CONDITION>    ->    <REPEAT> <COLON> <NUMBER>
     
@@ -55,6 +56,17 @@ The grammar is of LR1 form as below.
     
     <TARGET>       ->    <TARGET> <AND> <ID>
                    ->    <ID>
+    
+    <ACTION>       ->    <REPEAT>
+                   ->    <CREATE>
+                   ->    <REMOVE>
+                   ->    <JOIN>
+                   ->    <DISJOIN>
+                   ->    <MERGE>
+                   ->    <UNMERGE>
+    
+    <RESOURCE>     ->    <GRAPH>
+                   ->    <VERTEX>
 
 Example
 -------

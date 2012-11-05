@@ -5,6 +5,8 @@
 #include <string>
 #include <utility>
 #include "../_include/InputOutput.h"
+#include "../../_include/Command.h"
+#include "../../../common/_include/Exception.h"
 
 ConsoleMain::ConsoleMain (Controller *control)
 : control_(control)
@@ -17,9 +19,11 @@ void ConsoleMain::start ()
     hint();
     while (1) {
         Command cmd = interaction();
+        Print("test\n");
         if ((status = Process(&cmd)) == EXIT) {
             return;
         }
+        Print("test\n");
         switch (status) {
             case PENDING:
                 render();
@@ -60,15 +64,59 @@ void ConsoleMain::hint ()
              << "    HELP\n"
              << "    CREATE GRAPH\n"
              << "    CREATE VERTEX AT <Graph ID>\n"
-             << "    JOIN <Vertex1 ID> <Vertex2 ID>\n"
-             << "    DISJOIN <Vertex1 ID> <Vertex2 ID>\n";
+             << "    JOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>\n"
+             << "    DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>\n";
     refresh();
 }
 
 ConsoleMain::Command ConsoleMain::interaction ()
 {
-    Print("%s", "Enter Command: ");
+    Print("Enter Command: ");
     std::string input;
+
+    /*
+    std::getline(std::cin, input);
+    if (input == "EXIT") {
+        return Command{ .type_ = Command::EXIT, {0} };
+    }
+    else if (input == "INFO") {
+        return Command{ .type_ = Command::INFO, {0} };
+    }
+    else if (input == "HELP") {
+        return Command{ .type_ = Command::HELP, {0} };
+    }
+    try {
+        cmd::Command command = cmd::parse(cmd::tokenize(input));
+        if (command == cmd::Command::Action::CREATE) {
+            Print("matched 1: ");
+            if (command.resourceType_ == cmd::Command::Resource::GRAPH) {
+                Print("matched 2: ");
+                return Command{ .type_ = Command::NEW_GRAPH, {0} };
+            }
+            else if (command.resourceType_ == cmd::Command::Resource::VERTEX) {
+                Command com = { .type_ = Command::NEW_VERTEX_AT, {0} };
+                com.id_ = command.resource_;
+                return com;
+            }
+        }
+        if (command == cmd::Command::Action::JOIN) {
+            Command com{ .type_ = Command::JOIN, {0} };
+            com.idPair_[0] = command.targetPair_[0];
+            com.idPair_[1] = command.targetPair_[1];
+            return com;
+        }
+        if (command == cmd::Command::Action::DISJOIN) {
+            Command com{ .type_ = Command::DISJOIN, {0} };
+            com.idPair_[0] = command.targetPair_[0];
+            com.idPair_[1] = command.targetPair_[1];
+            return com;
+        }
+    }
+    catch (LogicExcept &err) {
+        return Command { .type_ = Command::ERROR, {0} };
+    }
+    */
+
     while (std::cin >> input) {
         if (input == "EXIT") {
             return Command{ .type_ = Command::EXIT, {0} };

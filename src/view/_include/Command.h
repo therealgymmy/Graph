@@ -2,8 +2,9 @@
 #define COMMAND_H
 
 // Dependencies
-#include <vector>
 #include <string>
+#include <vector>
+#include "../../common/_include/Types.h"
 
 namespace cmd {
 
@@ -17,10 +18,12 @@ public:
         CREATE,     REMOVE,
         JOIN,       DISJOIN,
         MERGE,      UNMERGE,
+        HAS,
 
         // Resource
         GRAPH,
         VERTEX,
+        CYCLE,
 
         ID,         // A number prefixed by '@' - i.e. @123
         NUMBER,
@@ -51,6 +54,45 @@ private:
 };
 
 std::vector<Token> tokenize(const std::string &input);
+
+// A limited form of grammar is currently supported.
+//
+// <Statement> -> <ACTION> <RESOURCE> <MODIFIER> <SEMICOLON>
+//
+// <MODIFIER> -> <AT> <RESOURCE> <ID>
+//            -> <ID> <AND> <ID>
+//            -> <ID>
+//            -> NULL
+//
+// <ACTION>   ->    <CREATE>
+//            ->    <REMOVE>
+//            ->    <JOIN>
+//            ->    <DISJOIN>
+//            ->    <MERGE>
+//            ->    <UNMERGE>
+//            ->    <HAS>
+//
+// <RESOURCE> ->    <GRAPH>
+//            ->    <VERTEX>
+//            ->    <CYCLE>
+//
+// This needs to be modified later.
+struct Command {
+    enum class Action { CREATE, REMOVE, JOIN, DISJOIN, MERGE, UNMERGE, HAS };
+    enum class Resource { GRAPH, VERTEX, CYCLE, };
+    union {
+        struct {
+            Identity resource_;
+        };
+        Identity targetPair_[2];
+    };
+    Action   actionType_;
+    Resource resourceType_;
+
+    operator Action   () const { return actionType_; }
+};
+
+Command parse (std::vector<Token> list);
 
 }
 
