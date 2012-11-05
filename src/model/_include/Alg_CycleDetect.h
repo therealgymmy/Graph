@@ -8,6 +8,7 @@ class NodeStatus;
 
 class CycleDetect : public Algorithm {
 public:
+    CycleDetect (LogicController &logic = LogicControl);
     virtual Result run (const Parameter& param);
 
 private:

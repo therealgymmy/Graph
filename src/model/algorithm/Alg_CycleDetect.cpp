@@ -5,7 +5,6 @@
 #include <map>
 #include <utility>
 #include "../_include/Graph.h"
-#include "../_include/LogicController.h"
 #include "../_include/ModelTypes.h"
 
 class CycleFound {};
@@ -45,13 +44,18 @@ NodeStatus::Color NodeStatus::statusOf (const Identity id) const
     return it->second;
 }
 
+CycleDetect::CycleDetect (LogicController &logic)
+: Algorithm(logic)
+{
+}
+
 CycleDetect::Result CycleDetect::run (const CycleDetect::Parameter& parm)
 {
     Identity g_id = parm.id_;
     Result result = { .hasCycle_ = false };
 
     NodeStatus node;
-    Graph::VertexList list = LogicControl.verticesOf(g_id);
+    Graph::VertexList list = logic_.verticesOf(g_id);
     try {
         findCycle(*list.begin(), NULL_IDENTITY, &node);
     }
@@ -71,7 +75,7 @@ void CycleDetect::findCycle (const Identity v_id,
     }
 
     node->visit(v_id);
-    Graph::VertexList neighbours = LogicControl.neighboursOf(v_id);
+    Graph::VertexList neighbours = logic_.neighboursOf(v_id);
     std::for_each(neighbours.begin(), neighbours.end(),
                   [&] (const Identity id) {
                       if (id != parent_id &&

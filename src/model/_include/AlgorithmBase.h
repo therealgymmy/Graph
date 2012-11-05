@@ -7,10 +7,14 @@
 
 // Dependencies
 #include "AlgorithmList.h"
+#include "LogicController.h"
 #include "ModelTypes.h"
 
 class Algorithm {
 public:
+//--Constructor
+    Algorithm (LogicController &logic = LogicControl) : logic_(logic) {}
+
 //--Destructor
     virtual ~Algorithm () = default;
 
@@ -19,7 +23,8 @@ public:
 
     virtual Result run (const Parameter& param) = 0;
 
-private:
+protected:
+    LogicController &logic_;
 };
 
 union Algorithm::Parameter {

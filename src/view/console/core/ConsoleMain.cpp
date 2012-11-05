@@ -19,11 +19,9 @@ void ConsoleMain::start ()
     hint();
     while (1) {
         Command cmd = interaction();
-        Print("test\n");
         if ((status = Process(&cmd)) == EXIT) {
             return;
         }
-        Print("test\n");
         switch (status) {
             case PENDING:
                 render();
@@ -31,7 +29,15 @@ void ConsoleMain::start ()
                 status = SUCCESS;
                 break;
             case ERROR:
+                if (cmd.type_ == Command::HAS_CYCLE_AT) {
+                    Print("There doesn't exist a cycle at Graph %d.\n", cmd.id_);
+                }
                 Print("Error in Operation!\n");
+                break;
+            case SUCCESS:
+                if (cmd.type_ == Command::HAS_CYCLE_AT) {
+                    Print("There exists a cycle at Graph %d.\n", cmd.id_);
+                }
                 break;
             default:
                 break;
@@ -63,9 +69,10 @@ void ConsoleMain::hint ()
              << "    INFO\n"
              << "    HELP\n"
              << "    CREATE GRAPH\n"
-             << "    CREATE VERTEX AT <Graph ID>\n"
+             << "    CREATE VERTEX AT GRAPH <Graph ID>\n"
              << "    JOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>\n"
-             << "    DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>\n";
+             << "    DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>\n"
+             << "    HAS CYCLE AT GRAPH <Graph ID>\n";
     refresh();
 }
 
@@ -74,7 +81,6 @@ ConsoleMain::Command ConsoleMain::interaction ()
     Print("Enter Command: ");
     std::string input;
 
-    /*
     std::getline(std::cin, input);
     if (input == "EXIT") {
         return Command{ .type_ = Command::EXIT, {0} };
@@ -88,13 +94,23 @@ ConsoleMain::Command ConsoleMain::interaction ()
     try {
         cmd::Command command = cmd::parse(cmd::tokenize(input));
         if (command == cmd::Command::Action::CREATE) {
-            Print("matched 1: ");
             if (command.resourceType_ == cmd::Command::Resource::GRAPH) {
-                Print("matched 2: ");
                 return Command{ .type_ = Command::NEW_GRAPH, {0} };
             }
             else if (command.resourceType_ == cmd::Command::Resource::VERTEX) {
                 Command com = { .type_ = Command::NEW_VERTEX_AT, {0} };
+                com.id_ = command.resource_;
+                return com;
+            }
+        }
+        if (command == cmd::Command::Action::REMOVE) {
+            if (command.resourceType_ == cmd::Command::Resource::GRAPH) {
+                Command com = { .type_ = Command::REM_GRAPH, {0} };
+                com.id_ = command.resource_;
+                return com;
+            }
+            else if (command.resourceType_ == cmd::Command::Resource::VERTEX) {
+                Command com = { .type_ = Command::REM_VERTEX, {0} };
                 com.id_ = command.resource_;
                 return com;
             }
@@ -111,114 +127,21 @@ ConsoleMain::Command ConsoleMain::interaction ()
             com.idPair_[1] = command.targetPair_[1];
             return com;
         }
+        if (command == cmd::Command::Action::HAS) {
+            if (command.resourceType_ == cmd::Command::Resource::CYCLE) {
+                Command com{ .type_ = Command::HAS_CYCLE_AT, {0} };
+                com.id_ = command.resource_;
+                return com;
+            }
+        }
+    }
+    catch (RuntimeExcept &err) {
+        return Command { .type_ = Command::ERROR, {0} };
     }
     catch (LogicExcept &err) {
         return Command { .type_ = Command::ERROR, {0} };
     }
-    */
 
-    while (std::cin >> input) {
-        if (input == "EXIT") {
-            return Command{ .type_ = Command::EXIT, {0} };
-        }
-        else if (input == "INFO") {
-            return Command{ .type_ = Command::INFO, {0} };
-        }
-        else if (input == "HELP") {
-            return Command{ .type_ = Command::HELP, {0} };
-        }
-        else if (input == "CREATE") {
-            std::cin >> input;
-            if (input == "GRAPH") {
-                return Command{ .type_ = Command::NEW_GRAPH, {0} };
-            }
-            else if (input == "VERTEX") {
-                Command cmd = { .type_ = Command::NEW_VERTEX_AT, {0} };
-                std::cin >> input;
-                if (input != "AT") {
-                    cmd.type_ = Command::ERROR;
-                    return cmd;
-                }
-                Identity graph;
-                if (!(std::cin >> graph)) {
-                    std::cin.clear();
-                    cmd.type_ = Command::ERROR;
-                    return cmd;
-                }
-                cmd.id_ = graph;
-                return cmd;
-            }
-            else {
-                return Command{ .type_ = Command::ERROR, {0} };
-            }
-        }
-        else if (input == "REMOVE") {
-            std::cin >> input;
-            if (input == "GRAPH") {
-                Command cmd = { .type_ = Command::REM_GRAPH, {0} };
-                Identity graph;
-                if (!(std::cin >> graph)) {
-                    std::cin.clear();
-                    cmd.type_ = Command::ERROR;
-                    return cmd;
-                }
-                cmd.id_ = graph;
-                return cmd;
-            }
-            else if (input == "VERTEX") {
-                Command cmd = { .type_ = Command::REM_VERTEX, {0} };
-                Identity vertex;
-                if (!(std::cin >> vertex)) {
-                    std::cin.clear();
-                    cmd.type_ = Command::ERROR;
-                    return cmd;
-                }
-                cmd.id_ = vertex;
-                return cmd;
-            }
-        }
-        else if (input == "JOIN") {
-            Command cmd = { .type_ = Command::JOIN, {0} };
-            Identity vertex1;
-            if (!(std::cin >> vertex1)) {
-                std::cin.clear();
-                cmd.type_ = Command::ERROR;
-                return cmd;
-            }
-            Identity vertex2;
-            if (!(std::cin >> vertex2)) {
-                std::cin.clear();
-                cmd.type_ = Command::ERROR;
-                return cmd;
-            }
-            cmd.idPair_[0] = vertex1;
-            cmd.idPair_[1] = vertex2;
-            return cmd;
-        }
-        else if (input == "DISJOIN") {
-            Command cmd = { .type_ = Command::DISJOIN, {0} };
-            Identity vertex1;
-            if (!(std::cin >> vertex1)) {
-                std::cin.clear();
-                cmd.type_ = Command::ERROR;
-                return cmd;
-            }
-            Identity vertex2;
-            if (!(std::cin >> vertex2)) {
-                std::cin.clear();
-                cmd.type_ = Command::ERROR;
-                return cmd;
-            }
-            cmd.idPair_[0] = vertex1;
-            cmd.idPair_[1] = vertex2;
-            return cmd;
-        }
-        else {
-            return Command{ .type_ = Command::ERROR, {0} };
-        }
-    }
-
-    // For consistency, control should never reach here.
     return Command { .type_ = Command::ERROR, {0} };
 }
 
@@ -263,6 +186,8 @@ ConsoleMain::Status ConsoleMain::Process (const Command *cmd)
                     ? PENDING : ERROR;
 
     // Access
+        case Command::HAS_CYCLE_AT:
+            return (control_->hasCycleAt(cmd->id_)) ? SUCCESS : ERROR;
     }
 }
 

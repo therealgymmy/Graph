@@ -3,6 +3,7 @@
 // Dependencies
 #include <cstdlib>
 #include "../../common/_include/Exception.h"
+#include <iostream>
 
 namespace cmd {
 
@@ -49,6 +50,7 @@ try
             if (list.at(1).type() == Token::VERTEX &&
                 list.at(2).type() == Token::AT &&
                 list.at(3).type() == Token::GRAPH &&
+                list.at(4).type() == Token::ID &&
                 list.at(5).type() == Token::SEMICOLON) {
                 command.resourceType_ = Command::Resource::VERTEX;
                 command.resource_ = std::atoi(list.at(4).lexeme()
@@ -60,6 +62,7 @@ try
             throw LogicExcept();
         case Command::Action::REMOVE:
             if (list.at(1).type() == Token::GRAPH &&
+                list.at(2).type() == Token::ID &&
                 list.at(3).type() == Token::SEMICOLON) {
                 command.resourceType_ = Command::Resource::VERTEX;
                 command.resource_ = std::atoi(list.at(2).lexeme()
@@ -67,32 +70,46 @@ try
                                                   .lexeme().length())
                                                   .c_str());
                 return command;
-                break;
             }
             if (list.at(1).type() == Token::VERTEX &&
+                list.at(2).type() == Token::ID &&
                 list.at(3).type() == Token::SEMICOLON) {
                 command.resourceType_ = Command::Resource::VERTEX;
-                break;
+                command.resource_ = std::atoi(list.at(2).lexeme()
+                                                  .substr(1, list.at(2)
+                                                  .lexeme().length())
+                                                  .c_str());
+                return command;
             }
             throw LogicExcept();
         case Command::Action::HAS:
-            if (list.at(1).type() == Token::CYCLE) {
+            if (list.at(1).type() == Token::CYCLE &&
+                list.at(2).type() == Token::AT &&
+                list.at(3).type() == Token::GRAPH &&
+                list.at(4).type() == Token::ID &&
+                list.at(5).type() == Token::SEMICOLON) {
                 command.resourceType_ = Command::Resource::CYCLE;
-                break;
+                command.resource_ = std::atoi(list.at(4).lexeme()
+                                                  .substr(1, list.at(4)
+                                                  .lexeme().length())
+                                                  .c_str());
+                return command;
             }
             throw LogicExcept();
 
         case Command::Action::JOIN:
         case Command::Action::DISJOIN:
-            if (list.at(2).type() == Token::VERTEX &&
-                list.at(4).type() == Token::AND &&
-                list.at(6).type() == Token::SEMICOLON) {
-                command.targetPair_[0] = std::atoi(list.at(3).lexeme()
-                                                       .substr(1, list.at(3)
+            if (list.at(1).type() == Token::VERTEX &&
+                list.at(2).type() == Token::ID &&
+                list.at(3).type() == Token::AND &&
+                list.at(4).type() == Token::ID &&
+                list.at(5).type() == Token::SEMICOLON) {
+                command.targetPair_[0] = std::atoi(list.at(2).lexeme()
+                                                       .substr(1, list.at(2)
                                                        .lexeme().length())
                                                        .c_str());
-                command.targetPair_[1] = std::atoi(list.at(5).lexeme()
-                                                       .substr(1, list.at(5)
+                command.targetPair_[1] = std::atoi(list.at(4).lexeme()
+                                                       .substr(1, list.at(4)
                                                        .lexeme().length())
                                                        .c_str());
                 return command;

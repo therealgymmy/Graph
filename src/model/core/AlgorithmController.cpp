@@ -9,11 +9,11 @@
 
 AlgorithmController AlgorithmController::instance_;
 
-AlgorithmController::AlgorithmController ()
-: logic_(LogicControl)
+AlgorithmController::AlgorithmController (LogicController &logic)
+: logic_(logic)
 // Initialize all algorithms.
 {
-    alg_[AlgorithmType::CYCLE_DETECT] = new CycleDetect();
+    alg_[AlgorithmType::CYCLE_DETECT] = new CycleDetect(logic);
 }
 
 AlgorithmController::~AlgorithmController ()

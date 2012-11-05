@@ -13,7 +13,7 @@
 class AlgorithmController {
 public:
 //--Constructor
-    AlgorithmController ();
+    AlgorithmController (LogicController &logic = LogicControl);
 
 //--Destructor
     ~AlgorithmController ();

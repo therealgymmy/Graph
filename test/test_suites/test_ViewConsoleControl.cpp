@@ -17,7 +17,8 @@ TestStatus ViewConsoleControl::run ()
     Storage stack;
     BaseController base(stack);
     LogicController logic(base);
-    Controller control(&logic, &AlgorithmControl);
+    AlgorithmController alg(logic);
+    Controller control(&logic, &alg);
     ConsoleMain console(&control);
 
     control.subscribe(&console);

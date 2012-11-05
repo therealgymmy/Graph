@@ -34,11 +34,12 @@ private:
     bool isSuccess_;
 
     // Return Fields
-    union {
+    // Union does not work intended here.
+    //union {
         Identity id_;
         IdentityList idList_; // Has non-trivial ctor - sepcial handling.
                               // Refer to Result.cpp for details.
-    };
+    //};
 
     void validate (Type type) const;
 };
