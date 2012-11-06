@@ -68,11 +68,11 @@ void ConsoleMain::hint ()
              << "    EXIT\n"
              << "    INFO\n"
              << "    HELP\n"
-             << "    CREATE GRAPH\n"
-             << "    CREATE VERTEX AT GRAPH <Graph ID>\n"
-             << "    JOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>\n"
-             << "    DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>\n"
-             << "    HAS CYCLE AT GRAPH <Graph ID>\n";
+             << "    CREATE GRAPH;\n"
+             << "    CREATE VERTEX AT GRAPH <Graph ID>;\n"
+             << "    JOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;\n"
+             << "    DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;\n"
+             << "    HAS CYCLE AT GRAPH <Graph ID>;\n";
     refresh();
 }
 
