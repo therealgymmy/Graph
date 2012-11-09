@@ -2,7 +2,6 @@
 
 // Dependencies
 #include "../../common/_include/Exception.h"
-#include "../_include/DeltaInitMacro.h"
 
 #define REGISTER        '@'
 #define COMMENTS        '#'
@@ -50,6 +49,11 @@ inline MAKE_IS (number)    // 0==0x30, 9==0x39
     return (ARG >= 0x30 && ARG <= 0x39);
 }
 
+inline MAKE_IS (everything)
+{
+    return (ARG >= 0x0 && ARG <= 0x7F);
+}
+
 constexpr State next (State from, char c)
 {
     return from == ST_START      && IS(whitespace, c) ? ST_WHITESPACE :
@@ -65,20 +69,46 @@ constexpr State next (State from, char c)
            from == ST_START      && (c == ':')        ? ST_COLON:
            from == ST_START      && (c == ';')        ? ST_SEMICOLON:
            from == ST_START      && (c == COMMENTS)   ? ST_COMMENT:
+           from == ST_COMMENT    && IS(everything,  c) ? ST_COMMENT:
            ST_NUL;
 }
 
-constexpr State delta[ST_WHITESPACE + 1][256] = { INITIALIZE(ST_NUL),
-                                                  INITIALIZE(ST_START),
-                                                  INITIALIZE(ST_ID),
-                                                  INITIALIZE(ST_NUMBER),
-                                                  INITIALIZE(ST_KEYWORD),
-                                                  INITIALIZE(ST_LBRACE),
-                                                  INITIALIZE(ST_RBRACE),
-                                                  INITIALIZE(ST_COLON),
-                                                  INITIALIZE(ST_SEMICOLON),
-                                                  INITIALIZE(ST_COMMENT),
-                                                  INITIALIZE(ST_WHITESPACE) };
+struct Table {
+    State delta[ST_WHITESPACE + 1][256];
+};
+
+// Purely awesome number sequence generator!
+template <unsigned... Is>
+struct Sequence {};
+
+template <unsigned N, unsigned... Is>
+struct GenerateSeq : GenerateSeq <N - 1, N - 1, Is...> {};
+
+template <unsigned... Is>
+struct GenerateSeq <0, Is...> : Sequence <Is...> {};
+// Credit of Xeo at StackOverflow.
+
+template <unsigned... Is>
+constexpr
+Table init (Sequence<Is...>)
+{
+    return {{ { next(ST_NUL,        Is)... },
+              { next(ST_START,      Is)... },
+              { next(ST_ID,         Is)... },
+              { next(ST_NUMBER,     Is)... },
+              { next(ST_KEYWORD,    Is)... },
+              { next(ST_LBRACE,     Is)... },
+              { next(ST_RBRACE,     Is)... },
+              { next(ST_COLON,      Is)... },
+              { next(ST_SEMICOLON,  Is)... },
+              { next(ST_COMMENT,    Is)... },
+              { next(ST_WHITESPACE, Is)... } }};
+}
+// The above code is purely awesome magic!
+
+constexpr Table table = init(GenerateSeq<256>{});
+
+#define delta table.delta
 
 constexpr State stateKinds[] = { ST_NUL,        // NULL State
                                  ST_NUL,        // START state
