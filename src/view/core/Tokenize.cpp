@@ -69,7 +69,7 @@ constexpr State next (State from, char c)
            from == ST_START      && (c == ':')        ? ST_COLON:
            from == ST_START      && (c == ';')        ? ST_SEMICOLON:
            from == ST_START      && (c == COMMENTS)   ? ST_COMMENT:
-           from == ST_COMMENT    && IS(everything,  c) ? ST_COMMENT:
+           from == ST_COMMENT    && IS(everything, c) ? ST_COMMENT:
            ST_NUL;
 }
 
