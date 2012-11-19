@@ -2,10 +2,18 @@
 #include "../_include/Exception.h"
 
 Result::Result (Type type, bool isSuccess)
-: type_(type), isSuccess_(isSuccess),
-  idList_() // Special handling for non-trvial union member idList_.
+: type_(type), isSuccess_(isSuccess)
 // Do nothing
 {
+    switch (type_) {
+        case ID_LIST:
+            // Special handling for non-trvial union member idList_.
+            new(&idList_) IdentityList;
+            break;
+        default:
+            // No extra work needed for trivial union members.
+            break;
+    }
 }
 
 Result::Result (const Result &rhs)
@@ -20,8 +28,19 @@ Result::Result (const Result &rhs)
             id_ = rhs.id_;
             break;
         case ID_LIST:
+            // Special handling for non-trvial union member idList_.
+            new(&idList_) IdentityList;
             idList_ = rhs.idList_;
             break;
+    }
+}
+
+Result::~Result ()
+// Special handling for non-trvial union members.
+{
+    if (type_ == ID_LIST) {
+        idList_.~IdentityList();
+        ::operator delete(&idList_);
     }
 }
 

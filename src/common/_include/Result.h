@@ -17,7 +17,7 @@ public:
     Result (const Result &rhs);
 
 //--Destructor
-    ~Result () { /* Required for non-trivial union member idList_ */ };
+    ~Result (); // For non-trivial union member idList_
 
 //--Accessor
     operator bool () const { return isSuccess_; }
@@ -35,11 +35,11 @@ private:
 
     // Return Fields
     // Union does not work intended here.
-    //union {
+    union {
         Identity id_;
         IdentityList idList_; // Has non-trivial ctor - sepcial handling.
                               // Refer to Result.cpp for details.
-    //};
+    };
 
     void validate (Type type) const;
 };
