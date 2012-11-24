@@ -9,13 +9,27 @@ This means you can build a graph and query the program on the graph's connectivi
 if it's isomorphic to another graph, or find a spanning tree, etc.
 
 **Graph** is still a work in progress.
-A command line interpreter should come first.
+A basic command line interpreter is now available.
 Also in the plan is a gui front-end, though I'm still considering which framework to use.
 
 Pre-requisite
 --------------
 
 To build **Graph**, you'll need rake and a compiler conforming to the **C++11** standard.
+
+How to Use Graph
+----------------
+
+#### Graph Commands
+* `EXIT`
+* `INFO`
+* `HELP`
+* `CREATE GRAPH;`
+* `CREATE VERTEX AT GRAPH <Graph ID>;`
+* `JOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;`
+* `DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;`
+* `HAS CYCLE AT GRAPH <Graph ID>;`
+* `HAS PATH AT VERTEX <Vertex1 ID> AND <Vertex2 ID> AT GRAPH <Graph ID>;`
 
 Compile and Test
 -----------------------
