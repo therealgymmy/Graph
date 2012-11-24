@@ -42,10 +42,12 @@ Result::Result (const Result &rhs)
 Result::~Result ()
 // Special handling for non-trvial union members.
 {
+    /*
     if (type_ == ID_LIST && isSuccess_) {
         idList_.~IdentityList();
         ::operator delete(&idList_);
     }
+    */
 }
 
 inline
