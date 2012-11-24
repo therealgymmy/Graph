@@ -6,6 +6,7 @@
 
 // Algorithms
 #include "../_include/Alg_CycleDetect.h"
+#include "../_include/Alg_VertexConnectivity.h"
 
 AlgorithmController AlgorithmController::instance_;
 
@@ -14,6 +15,7 @@ AlgorithmController::AlgorithmController (LogicController &logic)
 // Initialize all algorithms.
 {
     alg_[AlgorithmType::CYCLE_DETECT] = new CycleDetect(logic);
+    alg_[AlgorithmType::FIND_PATH]    = new VertexConnectivity(logic);
 }
 
 AlgorithmController::~AlgorithmController ()
@@ -31,3 +33,14 @@ bool AlgorithmController::hasCycleAt (const Identity g_id)
     Algorithm::Result result = alg_[AlgorithmType::CYCLE_DETECT]->run(param);
     return result.hasCycle_;
 }
+
+bool AlgorithmController::hasPathBetween (const Identity v1,
+                                          const Identity v2,
+                                          const Identity g_id)
+{
+    Algorithm::Parameter param = { .findPath = { .graph_ = g_id,
+                                                 .vertexPair_ = { v1, v2 } } };
+    Algorithm::Result result = alg_[AlgorithmType::FIND_PATH]->run(param);
+    return result.hasPath_;
+}
+

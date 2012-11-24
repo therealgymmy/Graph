@@ -5,14 +5,16 @@ Result::Result (Type type, bool isSuccess)
 : type_(type), isSuccess_(isSuccess)
 // Do nothing
 {
-    switch (type_) {
-        case ID_LIST:
-            // Special handling for non-trvial union member idList_.
-            new(&idList_) IdentityList;
-            break;
-        default:
-            // No extra work needed for trivial union members.
-            break;
+    if (isSuccess_) {
+        switch (type_) {
+            case ID_LIST:
+                // Special handling for non-trvial union member idList_.
+                new(&idList_) IdentityList;
+                break;
+            default:
+                // No extra work needed for trivial union members.
+                break;
+        }
     }
 }
 
@@ -20,25 +22,26 @@ Result::Result (const Result &rhs)
 : type_(rhs.type_), isSuccess_(rhs.isSuccess_)
 // Required for special handling of non-trivial union member idList_.
 {
-    switch (type_) {
-        case BOOL:
-            // Do nothing
-            break;
-        case ID:
-            id_ = rhs.id_;
-            break;
-        case ID_LIST:
-            // Special handling for non-trvial union member idList_.
-            new(&idList_) IdentityList;
-            idList_ = rhs.idList_;
-            break;
+    if (isSuccess_) {
+        switch (type_) {
+            case BOOL:
+                // Do nothing
+                break;
+            case ID:
+                id_ = rhs.id_;
+                break;
+            case ID_LIST:
+                // Special handling for non-trvial union member idList_.
+                new(&idList_) IdentityList(rhs.idList_);
+                break;
+        }
     }
 }
 
 Result::~Result ()
 // Special handling for non-trvial union members.
 {
-    if (type_ == ID_LIST) {
+    if (type_ == ID_LIST && isSuccess_) {
         idList_.~IdentityList();
         ::operator delete(&idList_);
     }
@@ -47,7 +50,7 @@ Result::~Result ()
 inline
 void Result::validate (Result::Type type) const
 {
-    if (type_ != type) {
+    if (type_ != type || !isSuccess_) {
         throw LogicExcept();
     }
 }

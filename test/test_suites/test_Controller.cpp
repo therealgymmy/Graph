@@ -62,5 +62,98 @@ TestStatus ControllerTest::exceptionSafe (Controller *control)
         __return_status(TestStatus::FAIL);
     }
 
+    __checkpoint("Normal Inquiry Testing Initialization");
+    Identity g;
+    Identity v1;
+    Identity v2;
+    try {
+        Result result = control->newGraph();
+        if (!result) {
+            __log_print << "Result should be true";
+            __return_status(TestStatus::FAIL);
+        }
+        g = result.id();
+    }
+    catch (...) {
+        __log_print << "Exception thrown during graph creation.";
+        __return_status(TestStatus::FAIL);
+    }
+    try {
+        Result result = control->newVertexAt(g);
+        if (!result) {
+            __log_print << "Result should be true";
+            __return_status(TestStatus::FAIL);
+        }
+        v1 = result.id();
+    }
+    catch (...) {
+        __log_print << "Exception thrown during vertex creation.";
+        __return_status(TestStatus::FAIL);
+    }
+    try {
+        Result result = control->newVertexAt(g);
+        if (!result) {
+            __log_print << "Result should be true";
+            __return_status(TestStatus::FAIL);
+        }
+        v2 = result.id();
+    }
+    catch (...) {
+        __log_print << "Exception thrown during vertex creation.";
+        __return_status(TestStatus::FAIL);
+    }
+
+    __checkpoint("Obtain graph of vertex");
+    try {
+        Result result = control->graphOf(v1);
+        if (!result) {
+            __log_print << "Result should be true";
+            __return_status(TestStatus::FAIL);
+        }
+    }
+    catch (...) {
+        __log_print << "Exception thrown.";
+        __return_status(TestStatus::FAIL);
+    }
+
+    __checkpoint("Obtain vertices from graph");
+    try {
+        Result result = control->verticesOf(g);
+        if (!result) {
+            __log_print << "Result should be true";
+            __return_status(TestStatus::FAIL);
+        }
+    }
+    catch (...) {
+        __log_print << "Exception thrown.";
+        __return_status(TestStatus::FAIL);
+    }
+
+    __checkpoint("Obtain neighbours from vertex");
+    try {
+        Result result = control->neighboursOf(v2);
+        if (!result) {
+            __log_print << "Result should be true";
+            __return_status(TestStatus::FAIL);
+        }
+    }
+    catch (...) {
+        __log_print << "Exception thrown.";
+        __return_status(TestStatus::FAIL);
+    }
+
+    __checkpoint("Obtain neighbours from vertex");
+    try {
+        Result result = control->neighboursOf(v1);
+        if (!result) {
+            __log_print << "Result should be true";
+            __return_status(TestStatus::FAIL);
+        }
+    }
+    catch (...) {
+        __log_print << "Exception thrown.";
+        __return_status(TestStatus::FAIL);
+    }
+
     __return_status(TestStatus::PASS);
 }

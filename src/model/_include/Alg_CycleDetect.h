@@ -12,7 +12,9 @@ public:
     virtual Result run (const Parameter& param);
 
 private:
-    void findCycle (const Identity v_id, const Identity parent_id, NodeStatus *n);
+    void findCycle (const Identity v_id,
+                    const Identity parent_id,
+                    NodeStatus *node);
 };
 
 #endif//ALG_CYCLE_DETECT_H

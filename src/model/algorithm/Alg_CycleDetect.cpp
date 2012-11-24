@@ -2,47 +2,11 @@
 
 // Dependencies
 #include <algorithm>
-#include <map>
 #include <utility>
 #include "../_include/Graph.h"
 #include "../_include/ModelTypes.h"
 
 class CycleFound {};
-
-class NodeStatus {
-public:
-    enum Color {
-        WHITE,      // not yet visited
-        GREY,       // being visited
-        BLACK,      // done visited
-    };
-
-    void visit (const Identity id);
-    void leave (const Identity id);
-    Color statusOf (const Identity id) const;
-
-private:
-    std::map<Identity, Color> status_;
-};
-
-void NodeStatus::visit (const Identity id)
-{
-    status_[id] = GREY;
-}
-
-void NodeStatus::leave (const Identity id)
-{
-    status_[id] = BLACK;
-}
-
-NodeStatus::Color NodeStatus::statusOf (const Identity id) const
-{
-    auto it = status_.find(id);
-    if (it == status_.end()) {
-        return WHITE;
-    }
-    return it->second;
-}
 
 CycleDetect::CycleDetect (LogicController &logic)
 : Algorithm(logic)

@@ -23,6 +23,8 @@ public:
 
 //--Query Interface
     bool hasCycleAt (const Identity g_id);
+    bool hasPathBetween (const Identity v1, const Identity v2,
+                         const Identity g_id);
 
 private:
     static AlgorithmController instance_;
