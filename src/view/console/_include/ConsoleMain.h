@@ -48,6 +48,7 @@ private:
             ALL_GRAPHS,
             ALL_VERTICES,
             HAS_CYCLE_AT,
+            HAS_PATH_AT,
 
             // Mutate
             NEW_GRAPH,
@@ -61,6 +62,10 @@ private:
         union {
             Identity id_;
             Identity idPair_[2];
+            struct {
+                Identity graph_;
+                Identity vertexPair_[2];
+            } findPath_;
         };
     };
 

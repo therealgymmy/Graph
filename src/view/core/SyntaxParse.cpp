@@ -7,6 +7,8 @@
 
 namespace cmd {
 
+Identity CmdIdToIdentity (Token cmdId);
+
 // Temporary parse, need rework in the future.
 Command parse (std::vector<Token> list)
 try
@@ -95,6 +97,24 @@ try
                                                   .c_str());
                 return command;
             }
+            else if (list.at(1).type() == Token::PATH &&
+                     list.at(2).type() == Token::AT &&
+                     list.at(3).type() == Token::VERTEX &&
+                     list.at(4).type() == Token::ID &&
+                     list.at(5).type() == Token::AND &&
+                     list.at(6).type() == Token::ID &&
+                     list.at(7).type() == Token::AT &&
+                     list.at(8).type() == Token::GRAPH &&
+                     list.at(9).type() == Token::ID &&
+                     list.at(10).type() == Token::SEMICOLON) {
+                command.resourceType_ = Command::Resource::PATH;
+                command.findPath_ = {
+                    .graph_ = CmdIdToIdentity(list.at(9)),
+                    .vertexPair_ = { CmdIdToIdentity(list.at(4)),
+                                     CmdIdToIdentity(list.at(6)) }
+                };
+                return command;
+            }
             throw LogicExcept();
 
         case Command::Action::JOIN:
@@ -119,6 +139,13 @@ try
 }
 catch (...) {
     throw LogicExcept();
+}
+
+Identity CmdIdToIdentity (Token cmdId)
+{
+    return std::atoi(cmdId.lexeme()
+                     .substr(1, cmdId.lexeme().length())
+                     .c_str());
 }
 
 }

@@ -35,6 +35,10 @@ public:
 
 //--Algorithm
     virtual Result hasCycleAt (const Identity graph) const override;
+    virtual Result hasPathAt  (const Identity v1,
+                               const Identity v2,
+                               const Identity graph) const override;
+
 
 //--Resource Creation
     virtual Result newGraph () override;

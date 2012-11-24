@@ -153,6 +153,7 @@ Token::Type getType (const std::string &lexeme, State state)
     else if (lexeme == "GRAPH")     { return Token::GRAPH; }
     else if (lexeme == "VERTEX")    { return Token::VERTEX; }
     else if (lexeme == "CYCLE")     { return Token::CYCLE; }
+    else if (lexeme == "PATH")      { return Token::PATH; }
     else if (lexeme == "AT")        { return Token::AT; }
     else if (lexeme == "AND")       { return Token::AND; }
     else {

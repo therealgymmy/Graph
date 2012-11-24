@@ -22,6 +22,9 @@ public:
 
 //--Algorithm
     virtual Result hasCycleAt (const Identity graph) const = 0;
+    virtual Result hasPathAt  (const Identity v1,
+                               const Identity v2,
+                               const Identity graph) const = 0;
 
 protected:
     AccessorApi () = default;

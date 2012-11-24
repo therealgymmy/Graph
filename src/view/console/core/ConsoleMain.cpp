@@ -32,11 +32,25 @@ void ConsoleMain::start ()
                 if (cmd.type_ == Command::HAS_CYCLE_AT) {
                     Print("There doesn't exist a cycle at Graph %d.\n", cmd.id_);
                 }
+                else if (cmd.type_ == Command::HAS_PATH_AT) {
+                    Print("There doesn't exist a path between "
+                          "Vertex %d and Vertex %d at Graph %d.\n",
+                          cmd.findPath_.vertexPair_[0],
+                          cmd.findPath_.vertexPair_[1],
+                          cmd.findPath_.graph_);
+                }
                 Print("Error in Operation!\n");
                 break;
             case SUCCESS:
                 if (cmd.type_ == Command::HAS_CYCLE_AT) {
                     Print("There exists a cycle at Graph %d.\n", cmd.id_);
+                }
+                else if (cmd.type_ == Command::HAS_PATH_AT) {
+                    Print("There exists a path between "
+                          "Vertex %d and Vertex %d at Graph %d.\n",
+                          cmd.findPath_.vertexPair_[0],
+                          cmd.findPath_.vertexPair_[1],
+                          cmd.findPath_.graph_);
                 }
                 break;
             default:
@@ -72,7 +86,8 @@ void ConsoleMain::hint ()
              << "    CREATE VERTEX AT GRAPH <Graph ID>;\n"
              << "    JOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;\n"
              << "    DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;\n"
-             << "    HAS CYCLE AT GRAPH <Graph ID>;\n";
+             << "    HAS CYCLE AT GRAPH <Graph ID>;\n"
+             << "    HAS PATH AT VERTEX <Vertex1 ID> AND <Vertex2 ID> AT GRAPH <Graph ID>;\n";
     refresh();
 }
 
@@ -133,6 +148,15 @@ ConsoleMain::Command ConsoleMain::interaction ()
                 com.id_ = command.resource_;
                 return com;
             }
+            else if (command.resourceType_ == cmd::Command::Resource::PATH) {
+                Command com{ .type_ = Command::HAS_PATH_AT, {0} };
+                com.findPath_ = {
+                    .graph_ = command.findPath_.graph_,
+                    .vertexPair_ = { command.findPath_.vertexPair_[0],
+                                     command.findPath_.vertexPair_[1]}
+                };
+                return com;
+            }
         }
     }
     catch (RuntimeExcept &err) {
@@ -188,6 +212,12 @@ ConsoleMain::Status ConsoleMain::Process (const Command *cmd)
     // Access
         case Command::HAS_CYCLE_AT:
             return (control_->hasCycleAt(cmd->id_)) ? SUCCESS : ERROR;
+        case Command::HAS_PATH_AT:
+            return (control_->hasPathAt(
+                        cmd->findPath_.vertexPair_[0],
+                        cmd->findPath_.vertexPair_[1],
+                        cmd->findPath_.graph_
+                        )) ? SUCCESS : ERROR;
     }
 }
 

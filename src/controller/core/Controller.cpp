@@ -85,6 +85,19 @@ catch (BadArgumentExcept &err)
     return Result(Result::BOOL, false);
 }
 
+Result Controller::hasPathAt (const Identity v1,
+                              const Identity v2,
+                              const Identity graph) const
+try
+{
+    return Result(Result::BOOL, alg_->hasPathBetween(v1, v2, graph));
+}
+catch (BadArgumentExcept &err)
+{
+    return Result(Result::BOOL, false);
+}
+
+
 Result Controller::newGraph ()
 try
 {
