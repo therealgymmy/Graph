@@ -9,7 +9,7 @@ Result::Result (Type type, bool isSuccess)
         switch (type_) {
             case ID_LIST:
                 // Special handling for non-trvial union member idList_.
-                //new(&idList_) IdentityList;
+                new(&idList_) IdentityList();
                 break;
             default:
                 // No extra work needed for trivial union members.
@@ -32,8 +32,7 @@ Result::Result (const Result &rhs)
                 break;
             case ID_LIST:
                 // Special handling for non-trvial union member idList_.
-                //new(&idList_) IdentityList(rhs.idList_);
-                idList_ = rhs.idList_;
+                new(&idList_) IdentityList(rhs.idList_);
                 break;
         }
     }
@@ -42,12 +41,9 @@ Result::Result (const Result &rhs)
 Result::~Result ()
 // Special handling for non-trvial union members.
 {
-    /*
     if (type_ == ID_LIST && isSuccess_) {
         idList_.~IdentityList();
-        ::operator delete(&idList_);
     }
-    */
 }
 
 inline
