@@ -28,66 +28,70 @@ TestStatus ModelBaseControl::run ()
 TestStatus ModelBaseControl::BaseTest ()
 {
     __enter;
+    __checkpoint("Initialization");
+    Storage stack;
+    BaseController base(stack);
+
     __checkpoint("New Vertex Creation");
-    Vertex *v1 = BaseControl.newVertex(1);
+    Vertex *v1 = base.newVertex(1);
     if (v1 == NULL) {
         __log_print << "vertex 1 was not created";
         __return_status(TestStatus::FAIL);
     }
-    Vertex *v2 = BaseControl.newVertex(2);
+    Vertex *v2 = base.newVertex(2);
     if (v2 == NULL) {
         __log_print << "vertex 2 was not created";
         __return_status(TestStatus::FAIL);
     }
-    Vertex *v3 = BaseControl.newVertex(3);
+    Vertex *v3 = base.newVertex(3);
     if (v3 == NULL) {
         __log_print << "vertex 3 was not created";
         __return_status(TestStatus::FAIL);
     }
 
     __checkpoint("Connect Vertices");
-    Edge *e = BaseControl.join(4, 1, 2);
+    Edge *e = base.join(4, 1, 2);
     if (e == NULL) {
         __log_print << "edge was not created";
         __return_status(TestStatus::FAIL);
     }
 
-    Edge *e1 = BaseControl.join(5, 1, 3);
+    Edge *e1 = base.join(5, 1, 3);
     if (e1 == NULL) {
         __log_print << "edge 1 was not created";
         __return_status(TestStatus::FAIL);
     }
 
-    Edge *e2 = BaseControl.join(6, 2, 3);
+    Edge *e2 = base.join(6, 2, 3);
     if (e2 == NULL) {
         __log_print << "edge 2 was not created";
         __return_status(TestStatus::FAIL);
     }
 
     __checkpoint("Check connectivity");
-    if (!BaseControl.isJoint(1,2)) {
+    if (!base.isJoint(1,2)) {
         __log_print << "1 & 2 not joint";
         __return_status(TestStatus::FAIL);
     }
-    if (!BaseControl.isJoint(1,3)) {
+    if (!base.isJoint(1,3)) {
         __log_print << "1 & 3 not joint";
         __return_status(TestStatus::FAIL);
     }
-    if (!BaseControl.isJoint(2,3)) {
+    if (!base.isJoint(2,3)) {
         __log_print << "2 & 3 not joint";
         __return_status(TestStatus::FAIL);
     }
 
     __checkpoint("Remove Vertices");
-    if (!BaseControl.removeVertex(1)) {
+    if (!base.removeVertex(1)) {
         __log_print << "remove fail";
         __return_status(TestStatus::FAIL);
     }
-    if (!BaseControl.removeVertex(2)) {
+    if (!base.removeVertex(2)) {
         __log_print << "remove fail";
         __return_status(TestStatus::FAIL);
     }
-    if (!BaseControl.removeVertex(3)) {
+    if (!base.removeVertex(3)) {
         __log_print << "remove fail";
         __return_status(TestStatus::FAIL);
     }

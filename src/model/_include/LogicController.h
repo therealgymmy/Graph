@@ -21,14 +21,11 @@
 class LogicController {
 public:
 //--Constructor
-    LogicController (BaseController &base = BaseControl);
+    LogicController (BaseController &base);
     LogicController (LogicController &rhs) = delete;
 
 //--Destructor
     ~LogicController ();
-
-//--Static Accessor
-    static LogicController& Instance () { return instance_; }
 
 //--Accessor
     bool hasGraph  (const Identity g_id) const;
@@ -57,7 +54,6 @@ public:
 
     void clear ();
 private:
-    static LogicController instance_;
     BaseController &base_;
 
     // register_
@@ -70,7 +66,5 @@ private:
     // Throw if idCount_ >= maximum allowed.
     Identity newIdentity ();     // may throw
 };
-
-#define LogicControl LogicController::Instance()
 
 #endif//LOGIC_CONTROLLER_H

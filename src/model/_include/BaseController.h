@@ -14,10 +14,8 @@
 class BaseController {
 public:
 //--Constructor
-    BaseController (Storage &stack = Stack);
+    BaseController (Storage &stack);
     BaseController (BaseController &rhs) = delete;
-
-    static BaseController& Instance() { return instance_; }
 
 //--Accessor to Stack
     // Pre: id must be valid.
@@ -42,13 +40,10 @@ public:
     bool disjoin (const Identity v1_id, const Identity v2_id);
 
 private:
-    static BaseController instance_;
     Storage &stack_;
 
 //--Accessor
     Edge* commonEdge (const Vertex *v1, const Vertex *v2) const;
 };
-
-#define BaseControl BaseController::Instance()
 
 #endif//BASE_CONTROLLER_H

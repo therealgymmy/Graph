@@ -4,10 +4,10 @@
 #include "../_include/test_Log.h"
 
 // Required By Test
-#include "../../src/view/console/_include/ConsoleMain.h"
 #include "../../src/controller/_include/Controller.h"
-#include "../../src/model/_include/LogicController.h"
 #include "../../src/model/_include/AlgorithmController.h"
+#include "../../src/model/_include/LogicController.h"
+#include "../../src/view/console/_include/ConsoleMain.h"
 
 TestStatus ViewConsoleControl::run ()
 {

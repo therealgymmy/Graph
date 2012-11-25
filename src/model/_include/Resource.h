@@ -17,8 +17,6 @@ public:
     Storage () = default;
     Storage (Storage &rhs) = delete;
 
-    static Storage& Instance() { return instance_; }
-
     Edge*   getEdge   (const Identity id);    // may throw
     Vertex* getVertex (const Identity id);    // may throw
 
@@ -30,7 +28,6 @@ public:
     void unref (const Edge   *e);
     void unref (const Vertex *v);
 private:
-    static Storage instance_;
     std::map<Identity, EdgePair>   eRef_;
     std::map<Identity, VertexPair> vRef_;
     std::set<Identity> id_;
@@ -38,7 +35,5 @@ private:
     void unreg   (const Edge   *e);
     void unreg   (const Vertex *v);
 };
-
-#define Stack Storage::Instance()
 
 #endif//RESOURCE_H

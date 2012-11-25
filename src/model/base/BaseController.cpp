@@ -5,8 +5,6 @@
 #include "../../common/_include/Exception.h"
 #include "../_include/Edge.h"
 
-BaseController BaseController::instance_;
-
 BaseController::BaseController (Storage &stack)
 : stack_(stack)
 {

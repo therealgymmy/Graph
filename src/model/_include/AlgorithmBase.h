@@ -14,7 +14,7 @@
 class Algorithm {
 public:
 //--Constructor
-    Algorithm (LogicController &logic = LogicControl) : logic_(logic) {}
+    Algorithm (LogicController &logic) : logic_(logic) {}
 
 //--Destructor
     virtual ~Algorithm () = default;

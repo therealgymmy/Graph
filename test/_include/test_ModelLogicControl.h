@@ -3,11 +3,20 @@
 
 #include "../_include/test_Base.h"
 
+// Required By Test
+#include "../../src/model/_include/LogicController.h"
+
 class ModelLogicControl: public Test {
 public:
+    ModelLogicControl ();
+
     virtual TestStatus run () override;
 
 private:
+    Storage         stack_;
+    BaseController  base_;
+    LogicController logic_;
+
     TestStatus GraphCreation ();
     TestStatus VertexCreation ();
     TestStatus VertexConnection ();

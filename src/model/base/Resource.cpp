@@ -7,8 +7,6 @@
 
 #define REG_DEFAULT_VAL 1
 
-Storage Storage::instance_;
-
 Edge* Storage::getEdge (const Identity id)
 {
     auto it = eRef_.find(id);

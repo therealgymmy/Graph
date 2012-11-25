@@ -13,13 +13,10 @@
 class AlgorithmController {
 public:
 //--Constructor
-    AlgorithmController (LogicController &logic = LogicControl);
+    AlgorithmController (LogicController &logic);
 
 //--Destructor
     ~AlgorithmController ();
-
-//--Static Accessor
-    static AlgorithmController& Instance () { return instance_; }
 
 //--Query Interface
     bool hasCycleAt (const Identity g_id);
@@ -27,11 +24,8 @@ public:
                          const Identity g_id);
 
 private:
-    static AlgorithmController instance_;
     LogicController &logic_;
     std::map<AlgorithmType, Algorithm*> alg_;
 };
-
-#define AlgorithmControl AlgorithmController::Instance()
 
 #endif//ALGORITHM_CONTROLLER_H

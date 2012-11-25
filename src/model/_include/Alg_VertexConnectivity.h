@@ -6,7 +6,7 @@
 
 class VertexConnectivity : public Algorithm {
 public:
-    VertexConnectivity (LogicController &logic = LogicControl);
+    VertexConnectivity (LogicController &logic);
     virtual Result run (const Parameter& param);
 
 private:

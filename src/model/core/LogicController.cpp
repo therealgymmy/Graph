@@ -9,8 +9,6 @@
 
 #define INITIAL_ID 1
 
-LogicController LogicController::instance_;
-
 LogicController::LogicController (BaseController &base)
 : base_(base),
   idCount_(INITIAL_ID)

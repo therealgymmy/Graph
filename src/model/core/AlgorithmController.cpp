@@ -8,8 +8,6 @@
 #include "../_include/Alg_CycleDetect.h"
 #include "../_include/Alg_VertexConnectivity.h"
 
-AlgorithmController AlgorithmController::instance_;
-
 AlgorithmController::AlgorithmController (LogicController &logic)
 : logic_(logic)
 // Initialize all algorithms.

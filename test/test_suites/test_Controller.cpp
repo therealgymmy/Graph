@@ -3,12 +3,20 @@
 // Dependencies
 #include "../_include/test_Log.h"
 
+// Required By Test
+#include "../../src/model/_include/AlgorithmController.h"
+#include "../../src/model/_include/LogicController.h"
+
 TestStatus ControllerTest::run ()
 {
     __enter;
 
     __checkpoint("Initialization");
-    Controller control(&LogicControl, &AlgorithmControl);
+    Storage stack;
+    BaseController base(stack);
+    LogicController logic(base);
+    AlgorithmController alg(logic);
+    Controller control(&logic, &alg);
 
     TestStatus testStatus = TestStatus::FAIL;
     if (!((testStatus = exceptionSafe(&control)) == TestStatus::PASS)) {
