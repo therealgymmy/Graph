@@ -13,6 +13,8 @@
 #define INIT(S, N) INIT_##N(S)
 #define INITIALIZE(S) {INIT(S, 0)}
 
+#define INPUT_UPPER_LIMIT 128     // ASCII goes up to 128
+
 namespace cmd {
 
 enum State {
@@ -31,6 +33,10 @@ enum State {
 
     ST_COMMENT,     // COMMENT
     ST_WHITESPACE,  // WHITESPACE
+
+    // This should always be the last member
+    // as it indicates the length.
+    NUMBER_OF_STATES,
 };
 
 inline MAKE_IS (whitespace)
@@ -73,11 +79,22 @@ constexpr State next (State from, char c)
            ST_NUL;
 }
 
+struct Row {
+    State row_[INPUT_UPPER_LIMIT];
+
+    const State& operator[] (unsigned int index) const { return row_[index]; }
+    State&       operator[] (unsigned int index)       { return row_[index]; }
+};
+
 struct Table {
-    State delta[ST_WHITESPACE + 1][256];
+    Row col_[NUMBER_OF_STATES];
+
+    const Row& operator[] (unsigned int index) const { return col_[index]; }
+    Row&       operator[] (unsigned int index)       { return col_[index]; }
 };
 
 // Purely awesome number sequence generator!
+// Credit of Xeo at StackOverflow.
 template <unsigned... Is>
 struct Sequence {};
 
@@ -86,29 +103,29 @@ struct GenerateSeq : GenerateSeq <N - 1, N - 1, Is...> {};
 
 template <unsigned... Is>
 struct GenerateSeq <0, Is...> : Sequence <Is...> {};
-// Credit of Xeo at StackOverflow.
+// Purely awesome number sequence generator!
 
-template <unsigned... Is>
+template <unsigned... IN>
 constexpr
-Table init (Sequence<Is...>)
+Row initExpand (State state, Sequence<IN...>)
 {
-    return {{ { next(ST_NUL,        Is)... },
-              { next(ST_START,      Is)... },
-              { next(ST_ID,         Is)... },
-              { next(ST_NUMBER,     Is)... },
-              { next(ST_KEYWORD,    Is)... },
-              { next(ST_LBRACE,     Is)... },
-              { next(ST_RBRACE,     Is)... },
-              { next(ST_COLON,      Is)... },
-              { next(ST_SEMICOLON,  Is)... },
-              { next(ST_COMMENT,    Is)... },
-              { next(ST_WHITESPACE, Is)... } }};
+    return Row{{ next(state, IN)... }};
+}
+
+template <unsigned... S, unsigned... IN>
+constexpr
+Table init (Sequence<S...>, Sequence<IN...> inputs)
+{
+    return Table{{ initExpand(State(S), inputs)... }};
 }
 // The above code is purely awesome magic!
 
-constexpr Table table = init(GenerateSeq<256>{});
+// State table,
+// which uses above templates to enable compile-time initialization.
+constexpr Table table = init(GenerateSeq<NUMBER_OF_STATES>{},
+                             GenerateSeq<INPUT_UPPER_LIMIT>{});
 
-#define delta table.delta
+#define delta table
 
 constexpr State stateKinds[] = { ST_NUL,        // NULL State
                                  ST_NUL,        // START state
@@ -208,5 +225,7 @@ std::vector<Token> tokenize (const std::string &line)
 
     return list;
 }
+
+#undef delta
 
 }
