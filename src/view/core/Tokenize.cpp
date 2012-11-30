@@ -10,9 +10,6 @@
 #define IS(func, ARG) is##func(ARG)
 #define ARG c
 
-#define INIT(S, N) INIT_##N(S)
-#define INITIALIZE(S) {INIT(S, 0)}
-
 #define INPUT_UPPER_LIMIT 128     // ASCII goes up to 128
 
 namespace cmd {
