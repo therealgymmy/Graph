@@ -2,6 +2,7 @@
 
 // Dependencies
 #include "../../common/_include/Exception.h"
+#include "../_include/StateTableGenerator.h"
 
 #define REGISTER        '@'
 #define COMMENTS        '#'
@@ -76,51 +77,10 @@ constexpr State next (State from, char c)
            ST_NUL;
 }
 
-struct Row {
-    State row_[INPUT_UPPER_LIMIT];
-
-    const State& operator[] (unsigned int index) const { return row_[index]; }
-    State&       operator[] (unsigned int index)       { return row_[index]; }
-};
-
-struct Table {
-    Row col_[NUMBER_OF_STATES];
-
-    const Row& operator[] (unsigned int index) const { return col_[index]; }
-    Row&       operator[] (unsigned int index)       { return col_[index]; }
-};
-
-// Purely awesome number sequence generator!
-// Credit of Xeo at StackOverflow.
-template <unsigned... Is>
-struct Sequence {};
-
-template <unsigned N, unsigned... Is>
-struct GenerateSeq : GenerateSeq <N - 1, N - 1, Is...> {};
-
-template <unsigned... Is>
-struct GenerateSeq <0, Is...> : Sequence <Is...> {};
-// Purely awesome number sequence generator!
-
-template <unsigned... IN>
-constexpr
-Row initExpand (State state, Sequence<IN...>)
-{
-    return Row{{ next(state, IN)... }};
-}
-
-template <unsigned... S, unsigned... IN>
-constexpr
-Table init (Sequence<S...>, Sequence<IN...> inputs)
-{
-    return Table{{ initExpand(State(S), inputs)... }};
-}
-// The above code is purely awesome magic!
-
-// State table,
-// which uses above templates to enable compile-time initialization.
-constexpr Table table = init(GenerateSeq<NUMBER_OF_STATES>{},
-                             GenerateSeq<INPUT_UPPER_LIMIT>{});
+// State table
+constexpr auto table = stg::create<INPUT_UPPER_LIMIT,
+                                   NUMBER_OF_STATES,
+                                   State>(next);
 
 #define delta table
 
