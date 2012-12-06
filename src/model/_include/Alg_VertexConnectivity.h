@@ -7,7 +7,7 @@
 class VertexConnectivity : public Algorithm {
 public:
     VertexConnectivity (LogicController &logic);
-    virtual Result run (const Parameter& param);
+    virtual Result run (const Parameter& param) override;
 
 private:
     void findPath (const Identity v1_id,
