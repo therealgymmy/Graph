@@ -39,6 +39,7 @@ union Algorithm::Parameter {
 union Algorithm::Result {
     bool hasCycle_;
     bool hasPath_;
+    Identity id_;
 };
 
 class NodeStatus {

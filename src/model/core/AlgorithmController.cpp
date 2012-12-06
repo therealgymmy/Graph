@@ -7,13 +7,18 @@
 // Algorithms
 #include "../_include/Alg_CycleDetect.h"
 #include "../_include/Alg_VertexConnectivity.h"
+#include "../_include/Alg_SpanningTree.h"
+
 
 AlgorithmController::AlgorithmController (LogicController &logic)
 : logic_(logic)
 // Initialize all algorithms.
 {
-    alg_[AlgorithmType::CYCLE_DETECT] = new CycleDetect(logic);
-    alg_[AlgorithmType::FIND_PATH]    = new VertexConnectivity(logic);
+#define Init(TYPE, ALG) alg_[AlgorithmType::TYPE] = new ALG(logic)
+    Init( CYCLE_DETECT,  CycleDetect        );
+    Init( FIND_PATH,     VertexConnectivity );
+    Init( SPANNING_TREE, SpanningTree       );
+#undef Init
 }
 
 AlgorithmController::~AlgorithmController ()
