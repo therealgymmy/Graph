@@ -7,6 +7,7 @@
 
 int main ()
 {
+    std::cout << "Hi Jimmy" << std::endl;
     Storage stack;
     BaseController base(stack);
     LogicController logic(base);
