@@ -14,6 +14,7 @@
 // Algorithms
 #include "../_include/test_CycleDetect.h"
 #include "../_include/test_VertexConnectivity.h"
+#include "../_include/test_SpanningTree.h"
 // Controller
 #include "../_include/test_Controller.h"
 // View
@@ -29,6 +30,7 @@ void initTest ()
 
     TestList.tests_[TestType::ALG_CYCLE_DETECT] = new Alg_CycleDetect();
     TestList.tests_[TestType::ALG_VERTEX_CONNECTIVITY] = new ut_Alg_VertexConnectivity();
+    TestList.tests_[TestType::ALG_SPANNING_TREE] = new ut_Alg_SpanningTree();
 
     TestList.tests_[TestType::CONTROLLER] = new ControllerTest();
 

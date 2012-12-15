@@ -47,3 +47,10 @@ bool AlgorithmController::hasPathBetween (const Identity v1,
     return result.hasPath_;
 }
 
+Identity AlgorithmController::spanningTreeAt (const Identity g_id)
+{
+    Algorithm::Parameter param = { .id_ = g_id };
+    Algorithm::Result result = alg_[AlgorithmType::SPANNING_TREE]->run(param);
+    return result.id_;
+}
+

@@ -3,9 +3,8 @@
 // Dependencies
 #include <algorithm>
 #include <utility>
+#include "../../common/_include/Exception.h"
 #include "../_include/Graph.h"
-
-class SpanningTreeFound {};
 
 SpanningTree::SpanningTree (LogicController &logic)
 : Algorithm(logic)
@@ -16,24 +15,47 @@ SpanningTree::Result
 SpanningTree::run (const SpanningTree::Parameter& parm)
 {
     Identity g_id = parm.id_;
-    Result result = { .id_ = NULL_IDENTITY };
 
+    NodeStatus node;
     Identity tree = logic_.newGraph();
-
-    try {
-        findSpanningTree(g_id, tree);
-    }
-    catch (SpanningTreeFound&) {
-        result.id_ = tree;
+    IdentityList list = logic_.verticesOf(g_id);
+    TreeNodes treeNodes;
+    for (Identity id : list) {
+        treeNodes[id] = logic_.newVertex(tree);
     }
 
-    return result;
+    findSpanningTree(*list.begin(), NULL_IDENTITY, tree, treeNodes, &node);
+
+    return Result { .id_ = tree };
 }
 
-// Temporary approach!
-// Once the common Result/Param facility is done,
-// this code needs to be updated.
 void
-SpanningTree::findSpanningTree (Identity g_id, Identity tree)
+SpanningTree::findSpanningTree (const Identity v_id,
+                                const Identity parent_id,
+                                const Identity tree,
+                                TreeNodes treeNodes,
+                                NodeStatus *nodeStatus)
 {
+    if (nodeStatus->statusOf(v_id) == NodeStatus::GREY) {
+        return;
+    }
+
+    nodeStatus->visit(v_id);
+
+    if (parent_id != NULL_IDENTITY) {
+        if (!logic_.join(treeNodes[v_id], treeNodes[parent_id])) {
+            throw LogicExcept();
+        }
+    }
+
+    IdentityList neighbours = logic_.neighboursOf(v_id);
+    std::for_each(neighbours.begin(), neighbours.end(),
+                  [&] (const Identity id) {
+                      if (id != parent_id &&
+                          nodeStatus->statusOf(id) != NodeStatus::BLACK) {
+                          findSpanningTree(id, v_id, tree, treeNodes, nodeStatus);
+                      }
+                  });
+
+    nodeStatus->leave(v_id);
 }

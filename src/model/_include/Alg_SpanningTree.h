@@ -8,11 +8,17 @@
 
 class SpanningTree : public Algorithm {
 public:
+    typedef std::map<Identity, Identity> TreeNodes;
+
     SpanningTree (LogicController &logic);
     virtual Result run (const Parameter& param) override;
 
 private:
-    void findSpanningTree (Identity g_id, Identity tree);
+    void findSpanningTree (const Identity v_id,
+                           const Identity parent_id,
+                           const Identity tree,
+                           TreeNodes treeNodes,
+                           NodeStatus *node);
 };
 
 #endif//ALG_SPANNING_TREE_H

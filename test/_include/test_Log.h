@@ -2,6 +2,7 @@
 #define TEST_LOG_H
 
 // Dependencies
+#include <algorithm>
 #include <sstream>
 #include "test_Base.h"
 
@@ -32,6 +33,24 @@
 #define __checkpoint(parm) do {\
                            TestLog().get() << "<--CheckPoint-->    " << (parm);\
                            } while (0)
+
+#define __print_graph(logic, graph) \
+    do {\
+        __log_print << "Graph " << graph;\
+        __log_print << "=============";\
+        IdentityList list = logic.verticesOf(graph);\
+        std::for_each(list.begin(), list.end(),\
+                [&] (Identity v) {\
+                    std::stringstream buffer;\
+                    buffer << v << " <--> ";\
+                    IdentityList neighbours = logic.neighboursOf(v);\
+                    std::for_each(neighbours.begin(), neighbours.end(),\
+                        [&] (Identity n) {\
+                            buffer << n << ", ";\
+                        });\
+                    __log_print << buffer.str();\
+                });\
+    } while (0)
 
 class TestLog {
 public:

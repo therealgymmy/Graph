@@ -22,6 +22,7 @@ public:
     bool hasCycleAt (const Identity g_id);
     bool hasPathBetween (const Identity v1, const Identity v2,
                          const Identity g_id);
+    Identity spanningTreeAt (const Identity g_id);
 
 private:
     LogicController &logic_;

@@ -15,6 +15,7 @@ enum class TestType {
     // Algorithm Unit Tests
     ALG_CYCLE_DETECT,
     ALG_VERTEX_CONNECTIVITY,
+    ALG_SPANNING_TREE,
 
     // Model Unit Tests
     CONTROLLER,
