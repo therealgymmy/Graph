@@ -30,6 +30,7 @@ How to Use Graph
 * `DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;`
 * `HAS CYCLE AT GRAPH <Graph ID>;`
 * `HAS PATH AT VERTEX <Vertex1 ID> AND <Vertex2 ID> AT GRAPH <Graph ID>;`
+* `HAS SPANNINGTREE AT GRAPH <Graph ID>;`
 
 Compile and Test
 -----------------------
