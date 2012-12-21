@@ -116,20 +116,21 @@ Token::Type getType (const std::string &lexeme, State state)
         }
     }
 
-    if      (lexeme == "REPEAT")    { return Token::REPEAT; }
-    else if (lexeme == "CREATE")    { return Token::CREATE; }
-    else if (lexeme == "REMOVE")    { return Token::REMOVE; }
-    else if (lexeme == "JOIN")      { return Token::JOIN; }
-    else if (lexeme == "DISJOIN")   { return Token::DISJOIN; }
-    else if (lexeme == "MERGE")     { return Token::MERGE; }
-    else if (lexeme == "UNMERGE")   { return Token::UNMERGE; }
-    else if (lexeme == "HAS")       { return Token::HAS; }
-    else if (lexeme == "GRAPH")     { return Token::GRAPH; }
-    else if (lexeme == "VERTEX")    { return Token::VERTEX; }
-    else if (lexeme == "CYCLE")     { return Token::CYCLE; }
-    else if (lexeme == "PATH")      { return Token::PATH; }
-    else if (lexeme == "AT")        { return Token::AT; }
-    else if (lexeme == "AND")       { return Token::AND; }
+    if      (lexeme == "REPEAT")       { return Token::REPEAT; }
+    else if (lexeme == "CREATE")       { return Token::CREATE; }
+    else if (lexeme == "REMOVE")       { return Token::REMOVE; }
+    else if (lexeme == "JOIN")         { return Token::JOIN; }
+    else if (lexeme == "DISJOIN")      { return Token::DISJOIN; }
+    else if (lexeme == "MERGE")        { return Token::MERGE; }
+    else if (lexeme == "UNMERGE")      { return Token::UNMERGE; }
+    else if (lexeme == "HAS")          { return Token::HAS; }
+    else if (lexeme == "GRAPH")        { return Token::GRAPH; }
+    else if (lexeme == "VERTEX")       { return Token::VERTEX; }
+    else if (lexeme == "CYCLE")        { return Token::CYCLE; }
+    else if (lexeme == "PATH")         { return Token::PATH; }
+    else if (lexeme == "SPANNINGTREE") { return Token::SPANNINGTREE; }
+    else if (lexeme == "AT")           { return Token::AT; }
+    else if (lexeme == "AND")          { return Token::AND; }
     else {
         throw RuntimeExcept();
     }

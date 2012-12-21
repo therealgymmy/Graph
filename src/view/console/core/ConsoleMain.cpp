@@ -52,6 +52,12 @@ void ConsoleMain::start ()
                           cmd.findPath_.vertexPair_[1],
                           cmd.findPath_.graph_);
                 }
+                else if (cmd.type_ == Command::HAS_SPANNINGTREE_AT) {
+                    Print("There exists a spanning tree at Graph %d.\n",
+                          cmd.idPair_[0]);
+                    render(cmd.idPair_[1]);
+                    refresh();
+                }
                 break;
             default:
                 break;
@@ -87,7 +93,8 @@ void ConsoleMain::hint ()
              << "    JOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;\n"
              << "    DISJOIN VERTEX <Vertex1 ID> AND <Vertex2 ID>;\n"
              << "    HAS CYCLE AT GRAPH <Graph ID>;\n"
-             << "    HAS PATH AT VERTEX <Vertex1 ID> AND <Vertex2 ID> AT GRAPH <Graph ID>;\n";
+             << "    HAS PATH AT VERTEX <Vertex1 ID> AND <Vertex2 ID> AT GRAPH <Graph ID>;\n"
+             << "    HAS SPANNINGTREE AT GRAPH <Graph ID>;\n";
     refresh();
 }
 
@@ -157,6 +164,11 @@ ConsoleMain::Command ConsoleMain::interaction ()
                 };
                 return com;
             }
+            else if (command.resourceType_ == cmd::Command::Resource::SPANNINGTREE) {
+                Command com{ .type_ = Command::HAS_SPANNINGTREE_AT, {0} };
+                com.idPair_[0] = command.resource_;
+                return com;
+            }
         }
     }
     catch (RuntimeExcept &err) {
@@ -169,7 +181,7 @@ ConsoleMain::Command ConsoleMain::interaction ()
     return Command { .type_ = Command::ERROR, {0} };
 }
 
-ConsoleMain::Status ConsoleMain::Process (const Command *cmd)
+ConsoleMain::Status ConsoleMain::Process (Command *cmd)
 {
     switch (cmd->type_) {
         default:
@@ -218,6 +230,13 @@ ConsoleMain::Status ConsoleMain::Process (const Command *cmd)
                         cmd->findPath_.vertexPair_[1],
                         cmd->findPath_.graph_
                         )) ? SUCCESS : ERROR;
+        case Command::HAS_SPANNINGTREE_AT:
+            Result result = control_->findSpanningTreeAt(cmd->idPair_[0]);
+            if (!result) {
+                return ERROR;
+            }
+            cmd->idPair_[1] = result.id();
+            return SUCCESS;
     }
 }
 
@@ -242,6 +261,28 @@ void ConsoleMain::render ()
                 });
             display_ << "\n\n";
             });
+}
+
+void ConsoleMain::render (const Identity graph)
+{
+    display_.clear();
+    display_.str(std::string());
+    display_ << "Graph " << graph;
+    display_ << "\n=============\n";
+    IdentityList list = control_->verticesOf(graph).idList();
+    std::for_each(list.begin(), list.end(),
+        [&] (Identity v) {
+            std::stringstream buffer;
+            buffer << v << " <--> ";
+            IdentityList neighbours = control_->neighboursOf(v).idList();
+            std::for_each(neighbours.begin(), neighbours.end(),
+                [&] (Identity n) {
+                    buffer << n << ", ";
+                });
+            display_ << buffer.str();
+            display_ << "\n";
+        });
+    display_ << "\n\n";
 }
 
 void ConsoleMain::refresh ()

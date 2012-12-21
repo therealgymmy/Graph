@@ -85,6 +85,7 @@ try
             }
             throw LogicExcept();
         case Command::Action::HAS:
+            // HAS_CYCLE_AT
             if (list.at(1).type() == Token::CYCLE &&
                 list.at(2).type() == Token::AT &&
                 list.at(3).type() == Token::GRAPH &&
@@ -97,6 +98,7 @@ try
                                                   .c_str());
                 return command;
             }
+            // HAS_PATH_AT
             else if (list.at(1).type() == Token::PATH &&
                      list.at(2).type() == Token::AT &&
                      list.at(3).type() == Token::VERTEX &&
@@ -113,6 +115,19 @@ try
                     .vertexPair_ = { CmdIdToIdentity(list.at(4)),
                                      CmdIdToIdentity(list.at(6)) }
                 };
+                return command;
+            }
+            // HAS_SPANNINGTREE_AT
+            else if (list.at(1).type() == Token::SPANNINGTREE &&
+                     list.at(2).type() == Token::AT &&
+                     list.at(3).type() == Token::GRAPH &&
+                     list.at(4).type() == Token::ID &&
+                     list.at(5).type() == Token::SEMICOLON) {
+                command.resourceType_ = Command::Resource::SPANNINGTREE;
+                command.resource_ = std::atoi(list.at(4).lexeme()
+                                                  .substr(1, list.at(4)
+                                                  .lexeme().length())
+                                                  .c_str());
                 return command;
             }
             throw LogicExcept();

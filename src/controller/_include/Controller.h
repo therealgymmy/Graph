@@ -38,6 +38,7 @@ public:
     virtual Result hasPathAt  (const Identity v1,
                                const Identity v2,
                                const Identity graph) const override;
+    virtual Result findSpanningTreeAt (const Identity graph) const override;
 
 
 //--Resource Creation

@@ -49,6 +49,7 @@ private:
             ALL_VERTICES,
             HAS_CYCLE_AT,
             HAS_PATH_AT,
+            HAS_SPANNINGTREE_AT,
 
             // Mutate
             NEW_GRAPH,
@@ -75,8 +76,9 @@ private:
 
     void hint ();
     Command interaction ();
-    Status Process (const Command *cmd);
+    Status Process (Command *cmd);
     void render ();
+    void render (const Identity graph);
     void refresh ();
 };
 

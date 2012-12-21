@@ -97,6 +97,22 @@ catch (BadArgumentExcept &err)
     return Result(Result::BOOL, false);
 }
 
+Result Controller::findSpanningTreeAt (const Identity graph) const
+try
+{
+    Result result(Result::ID, true);
+    result.setId(alg_->spanningTreeAt(graph));
+    return result;
+}
+catch (BadArgumentExcept &err)
+{
+    return Result(Result::ID, false);
+}
+catch (LogicExcept &err)
+{
+    return Result(Result::ID, false);
+}
+
 
 Result Controller::newGraph ()
 try

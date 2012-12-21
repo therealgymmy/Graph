@@ -25,6 +25,7 @@ public:
         VERTEX,
         CYCLE,
         PATH,
+        SPANNINGTREE,
 
         ID,         // A number prefixed by '@' - i.e. @123
         NUMBER,
@@ -76,11 +77,12 @@ std::vector<Token> tokenize(const std::string &input);
 // <RESOURCE> ->    <GRAPH>
 //            ->    <VERTEX>
 //            ->    <CYCLE>
+//            ->    <SPANNINGTREE>
 //
 // This needs to be modified later.
 struct Command {
     enum class Action { CREATE, REMOVE, JOIN, DISJOIN, MERGE, UNMERGE, HAS };
-    enum class Resource { GRAPH, VERTEX, CYCLE, PATH };
+    enum class Resource { GRAPH, VERTEX, CYCLE, PATH, SPANNINGTREE };
     union {
         struct {
             Identity resource_;
